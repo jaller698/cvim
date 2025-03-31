@@ -1,4 +1,3 @@
-
 return {
   'nvim-neo-tree/neo-tree.nvim',
   branch = 'v3.x',
@@ -29,15 +28,22 @@ return {
     },
   },
   config = function()
-    -- Place your neo-tree related configuration here if needed
-
-    -- Create an autocommand for neo-tree root changes:
+    -- Create an autocommand to update the local working directory when neo-tree root changes
     vim.api.nvim_create_autocmd("User", {
       pattern = "NeoTreeRootChanged",
       callback = function(args)
         if args.data and args.data.new_root then
           vim.cmd("lcd " .. args.data.new_root)
         end
+      end,
+    })
+
+    -- Create an autocommand to refresh neo-tree when exiting lazygit.
+    -- This assumes that lazygit opens a terminal whose name contains "lazygit".
+    vim.api.nvim_create_autocmd("TermClose", {
+      pattern = "*lazygit*",
+      callback = function()
+          require("neo-tree.sources.filesystem.commands").refresh(require("neo-tree.sources.manager").get_state("filesystem"))
       end,
     })
   end,
