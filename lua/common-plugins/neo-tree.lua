@@ -1,3 +1,4 @@
+
 return {
   'nvim-neo-tree/neo-tree.nvim',
   branch = 'v3.x',
@@ -14,8 +15,19 @@ return {
         vim.ui.open(state.tree:get_node():get_id())
       end,
     },
-    window = { mappings = { O = "system_open" } },
-    -- other options you might have
+    window = {
+      mappings = {
+        O = "system_open",
+      },
+    },
+    event_handlers = {
+      {
+        event = "file_opened",
+        handler = function()
+          require("neo-tree").close_all()
+        end,
+      },
+    },
   },
   keys = {
     {
@@ -28,7 +40,7 @@ return {
     },
   },
   config = function()
-    -- Create an autocommand to update the local working directory when neo-tree root changes
+    -- Update local working directory when neo-tree root changes.
     vim.api.nvim_create_autocmd("User", {
       pattern = "NeoTreeRootChanged",
       callback = function(args)
@@ -38,12 +50,35 @@ return {
       end,
     })
 
-    -- Create an autocommand to refresh neo-tree when exiting lazygit.
-    -- This assumes that lazygit opens a terminal whose name contains "lazygit".
+    -- Refresh neo-tree when exiting lazygit.
     vim.api.nvim_create_autocmd("TermClose", {
       pattern = "*lazygit*",
       callback = function()
-          require("neo-tree.sources.filesystem.commands").refresh(require("neo-tree.sources.manager").get_state("filesystem"))
+        require("neo-tree.sources.filesystem.commands").refresh(
+          require("neo-tree.sources.manager").get_state("filesystem")
+        )
+      end,
+    })
+
+    -- Ensure Neo-tree is the only window if opening with a directory argument.
+    vim.api.nvim_create_autocmd("VimEnter", {
+      callback = function()
+        if vim.fn.argc() == 1 and vim.fn.isdirectory(vim.fn.argv(0)) == 1 then
+          -- Capture the empty buffer ID before opening Neo-tree
+          local empty_buf = vim.api.nvim_get_current_buf()
+
+          -- Open Neo-tree and make it the only window
+          vim.cmd("Neotree show")
+          vim.defer_fn(function()
+            vim.cmd("wincmd p") -- Move focus to Neo-tree
+            vim.cmd("only") -- Close all other windows
+
+            -- If the empty buffer still exists, delete it properly
+            if vim.api.nvim_buf_is_valid(empty_buf) then
+              vim.cmd("bdelete! " .. empty_buf) -- Force close the buffer without affecting windows
+            end
+          end, 100)
+        end
       end,
     })
   end,
