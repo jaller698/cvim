@@ -1,0 +1,17 @@
+version: 39
+jobs:
+- name: sync pipeline
+  steps:
+  - !PushRepository
+    name: Github
+    remoteUrl: https://github.com/jaller698/cvim.git
+    userName: jaller698
+    passwordSecret: github_access_token
+    force: false
+    condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
+  triggers:
+  - !BranchUpdateTrigger {}
+  retryCondition: never
+  maxRetries: 3
+  retryDelay: 30
+  timeout: 14400
