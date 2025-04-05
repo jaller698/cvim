@@ -13,6 +13,7 @@ if vim.g.neovide then
   require 'neovide'
 end
 require 'keymaps'
+require 'pdftex'
 -- [[ Configure and install plugins ]]
 --
 --  To check the current status of your plugins, run
