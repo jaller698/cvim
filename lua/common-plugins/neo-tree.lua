@@ -15,34 +15,51 @@ return {
       end,
     },
     default_component_configs = {
-      name = { use_git_status_colors = false },
+      name = { use_git_status_colors = true },
+      close_if_last_window = true,
+      enable_git_status = true,
+      enable_diagnostics = true,
+      open_files_do_not_replace_types = { 'terminal', 'trouble', 'qf' },
+      modified = {
+        symbol = '[+]',
+        highlight = 'NeoTreeModified',
+      },
       git_status = {
         symbols = {
           -- Change type
-          added = '',
-          deleted = '',
-          modified = '',
-          renamed = '',
+          added = '✚', -- or "✚", but this is redundant info if you use git_status_colors on the name
+          modified = '', -- or "", but this is redundant info if you use git_status_colors on the name
+          deleted = '✖', -- this can only be used in the git_status source
+          renamed = '󰁕', -- this can only be used in the git_status source
           -- Status type
-          untracked = '',
-          ignored = '',
-          unstaged = '',
-          staged = '',
-          conflict = '',
+          untracked = '',
+          ignored = '',
+          unstaged = '󰄱',
+          staged = '',
+          conflict = '',
         },
       },
-    },
-    window = {
-      mappings = {
-        O = 'system_open',
+
+      window = {
+        mappings = {
+          O = 'system_open',
+          ['P'] = {
+            'toggle_preview',
+            config = {
+              use_float = false,
+              -- use_image_nvim = true,
+              -- title = 'Neo-tree Preview',
+            },
+          },
+        },
       },
-    },
-    event_handlers = {
-      {
-        event = 'file_opened',
-        handler = function()
-          require('neo-tree').close_all()
-        end,
+      event_handlers = {
+        {
+          event = 'file_opened',
+          handler = function()
+            require('neo-tree.command').execute { action = 'close' }
+          end,
+        },
       },
     },
   },
@@ -58,6 +75,16 @@ return {
   },
   config = function()
     -- Update local working directory when neo-tree root changes.
+    vim.diagnostic.config {
+      signs = {
+        text = {
+          [vim.diagnostic.severity.ERROR] = '',
+          [vim.diagnostic.severity.WARN] = '',
+          [vim.diagnostic.severity.INFO] = '',
+          [vim.diagnostic.severity.HINT] = '󰌵',
+        },
+      },
+    }
     vim.api.nvim_create_autocmd('User', {
       pattern = 'NeoTreeRootChanged',
       callback = function(args)
