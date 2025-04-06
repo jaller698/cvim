@@ -16,9 +16,11 @@ vim.api.nvim_set_keymap('v', '<S-Tab>', '<gv', { noremap = true, silent = true }
 vim.api.nvim_set_keymap('x', '<Tab>', '>gv', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('x', '<S-Tab>', '<gv', { noremap = true, silent = true })
 
--- Terminal keymaps
-vim.api.nvim_set_keymap('n', '<leader>th', ':split | terminal<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>tv', ':vsplit | terminal<CR>', { noremap = true, silent = true })
+-- Resize splits with Ctrl + Arrow keys
+vim.keymap.set('n', '<C-Down>', ':resize +2<CR>', { noremap = true, silent = true, desc = 'Increase window height' })
+vim.keymap.set('n', '<C-Up>', ':resize -2<CR>', { noremap = true, silent = true, desc = 'Decrease window height' })
+vim.keymap.set('n', '<C-Right>', ':vertical resize -2<CR>', { noremap = true, silent = true, desc = 'Decrease window width' })
+vim.keymap.set('n', '<C-Left>', ':vertical resize +2<CR>', { noremap = true, silent = true, desc = 'Increase window width' })
 
 -- Keybinds to make split navigation easier.
 --  Use CTRL+<hjkl> to switch between windows
