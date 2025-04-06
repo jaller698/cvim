@@ -1,60 +1,69 @@
+return {
+  {
+    'goolord/alpha-nvim',
+    config = function(_, _)
+      vim.api.nvim_set_hl(0, 'AlphaHeader', { fg = '#ff4400' })
 
-return {{
-  "goolord/alpha-nvim",
-  config = function(_, _)
-    vim.api.nvim_set_hl(0, "AlphaHeader", { fg = "#ff4400" })
+      local dashboard = require 'alpha.themes.dashboard'
 
-    local dashboard = require("alpha.themes.dashboard")
+      -- Customize the header text
+      dashboard.section.header.val = {
+        [[          _____                    _____                    _____                    _____                    _____                    _____                    _____]],
+        [[         /\    \                  /\    \                  /\    \                  /\    \                  /\    \                  /\    \                  /\    \]],
+        [[        /::\    \                /::\____\                /::\    \                /::\____\                /::\____\                /::\    \                /::\____\]],
+        [[       /::::\    \              /:::/    /               /::::\    \              /:::/    /               /:::/    /                \:::\    \              /::::|   |]],
+        [[      /::::::\    \            /:::/    /               /::::::\    \            /:::/    /               /:::/    /                  \:::\    \            /:::::|   |]],
+        [[     /:::/\:::\    \          /:::/    /               /:::/\:::\    \          /:::/    /               /:::/    /                    \:::\    \          /::::::|   |]],
+        [[    /:::/  \:::\    \        /:::/____/               /:::/__\:::\    \        /:::/    /               /:::/____/                      \:::\    \        /:::/|::|   |]],
+        [[   /:::/    \:::\    \      /::::\    \              /::::\   \:::\    \      /:::/    /                |::|    |                       /::::\    \      /:::/ |::|   |]],
+        [[  /:::/    / \:::\    \    /::::::\    \   _____    /::::::\   \:::\    \    /:::/    /      _____      |::|    |     _____    ____    /::::::\    \    /:::/  |::|___|______]],
+        [[ /:::/    /   \:::\    \  /:::/\:::\    \ /\    \  /:::/\:::\   \:::\    \  /:::/____/      /\    \     |::|    |    /\    \  /\   \  /:::/\:::\    \  /:::/   |::::::::\    \]],
+        [[/:::/____/     \:::\____\/:::/  \:::\    /::\____\/:::/  \:::\   \:::\____\|:::|    /      /::\____\    |::|    |   /::\____\/::\   \/:::/  \:::\____\/:::/    |:::::::::\____\]],
+        [[\:::\    \      \::/    /\::/    \:::\  /:::/    /\::/    \:::\  /:::/    /|:::|____\     /:::/    /    |::|    |  /:::/    /\:::\  /:::/    \::/    /\::/    / ~~~~~/:::/    /]],
+        [[ \:::\    \      \/____/  \/____/ \:::\/:::/    /  \/____/ \:::\/:::/    /  \:::\    \   /:::/    /     |::|    | /:::/    /  \:::\/:::/    / \/____/  \/____/      /:::/    /]],
+        [[  \:::\    \                       \::::::/    /            \::::::/    /    \:::\    \ /:::/    /      |::|____|/:::/    /    \::::::/    /                       /:::/    /]],
+        [[   \:::\    \                       \::::/    /              \::::/    /      \:::\    /:::/    /       |:::::::::::/    /      \::::/____/                       /:::/    /]],
+        [[    \:::\    \                      /:::/    /               /:::/    /        \:::\__/:::/    /        \::::::::::/____/        \:::\    \                      /:::/    /]],
+        [[     \:::\    \                    /:::/    /               /:::/    /          \::::::::/    /          ~~~~~~~~~~               \:::\    \                    /:::/    /]],
+        [[      \:::\    \                  /:::/    /               /:::/    /            \::::::/    /                                     \:::\    \                  /:::/    /]],
+        [[       \:::\____\                /:::/    /               /:::/    /              \::::/    /                                       \:::\____\                /:::/    /]],
+        [[        \::/    /                \::/    /                \::/    /                \::/____/                                         \::/    /                \::/    /]],
+        [[         \/____/                  \/____/                  \/____/                  ~~                                                \/____/                  \/____/]],
+      }
 
-    -- Customize the header text
-    dashboard.section.header.val = {
-      [[          _____                    _____                    _____                    _____                    _____                    _____                    _____]],
-      [[         /\    \                  /\    \                  /\    \                  /\    \                  /\    \                  /\    \                  /\    \]],
-      [[        /::\    \                /::\____\                /::\    \                /::\____\                /::\____\                /::\    \                /::\____\]],
-      [[       /::::\    \              /:::/    /               /::::\    \              /:::/    /               /:::/    /                \:::\    \              /::::|   |]],
-      [[      /::::::\    \            /:::/    /               /::::::\    \            /:::/    /               /:::/    /                  \:::\    \            /:::::|   |]],
-      [[     /:::/\:::\    \          /:::/    /               /:::/\:::\    \          /:::/    /               /:::/    /                    \:::\    \          /::::::|   |]],
-      [[    /:::/  \:::\    \        /:::/____/               /:::/__\:::\    \        /:::/    /               /:::/____/                      \:::\    \        /:::/|::|   |]],
-      [[   /:::/    \:::\    \      /::::\    \              /::::\   \:::\    \      /:::/    /                |::|    |                       /::::\    \      /:::/ |::|   |]],
-      [[  /:::/    / \:::\    \    /::::::\    \   _____    /::::::\   \:::\    \    /:::/    /      _____      |::|    |     _____    ____    /::::::\    \    /:::/  |::|___|______]],
-      [[ /:::/    /   \:::\    \  /:::/\:::\    \ /\    \  /:::/\:::\   \:::\    \  /:::/____/      /\    \     |::|    |    /\    \  /\   \  /:::/\:::\    \  /:::/   |::::::::\    \]],
-      [[/:::/____/     \:::\____\/:::/  \:::\    /::\____\/:::/  \:::\   \:::\____\|:::|    /      /::\____\    |::|    |   /::\____\/::\   \/:::/  \:::\____\/:::/    |:::::::::\____\]],
-      [[\:::\    \      \::/    /\::/    \:::\  /:::/    /\::/    \:::\  /:::/    /|:::|____\     /:::/    /    |::|    |  /:::/    /\:::\  /:::/    \::/    /\::/    / ~~~~~/:::/    /]],
-      [[ \:::\    \      \/____/  \/____/ \:::\/:::/    /  \/____/ \:::\/:::/    /  \:::\    \   /:::/    /     |::|    | /:::/    /  \:::\/:::/    / \/____/  \/____/      /:::/    /]],
-      [[  \:::\    \                       \::::::/    /            \::::::/    /    \:::\    \ /:::/    /      |::|____|/:::/    /    \::::::/    /                       /:::/    /]],
-      [[   \:::\    \                       \::::/    /              \::::/    /      \:::\    /:::/    /       |:::::::::::/    /      \::::/____/                       /:::/    /]],
-      [[    \:::\    \                      /:::/    /               /:::/    /        \:::\__/:::/    /        \::::::::::/____/        \:::\    \                      /:::/    /]],
-      [[     \:::\    \                    /:::/    /               /:::/    /          \::::::::/    /          ~~~~~~~~~~               \:::\    \                    /:::/    /]],
-      [[      \:::\    \                  /:::/    /               /:::/    /            \::::::/    /                                     \:::\    \                  /:::/    /]],
-      [[       \:::\____\                /:::/    /               /:::/    /              \::::/    /                                       \:::\____\                /:::/    /]],
-      [[        \::/    /                \::/    /                \::/    /                \::/____/                                         \::/    /                \::/    /]],
-      [[         \/____/                  \/____/                  \/____/                  ~~                                                \/____/                  \/____/]],
-    }
+      local stats = require('lazy').stats()
+      local total_plugins = stats.count
+      local datetime = tonumber(os.date '%H')
+      local username = os.getenv 'USERNAME' or 'User'
 
-    local stats = require("lazy").stats()
-    local total_plugins = stats.count
-    local datetime = tonumber(os.date("%H"))
-    local username = os.getenv("USERNAME") or "User"
+      local function footer()
+        local footer_datetime = os.date '  %m-%d-%Y   %H:%M:%S'
+        local version = vim.version()
+        local nvim_version_info = '   v' .. version.major .. '.' .. version.minor .. '.' .. version.patch
+        return footer_datetime .. '   Plugins ' .. total_plugins .. nvim_version_info
+      end
 
-    local function footer()
-      local footer_datetime = os.date("  %m-%d-%Y   %H:%M:%S")
-      local version = vim.version()
-      local nvim_version_info = "   v" .. version.major .. "." .. version.minor .. "." .. version.patch
-      return footer_datetime .. "   Plugins " .. total_plugins .. nvim_version_info
-    end
+      dashboard.section.buttons.val = {
+        dashboard.button('<space>f', '  New file'),
+        dashboard.button('<space>ff', '󰱽  Find files'),
+        dashboard.button('<space>fr', '󰱽  Recent files'),
+        dashboard.button('<space>fp', '  Find projects'),
+        dashboard.button('<space>gg', '  Git'),
+        dashboard.button('<space>gl', '  Git Log'),
+      }
 
-    -- Customize footer and header options
-    dashboard.section.footer.val = footer()
-    dashboard.section.header.opts = {
-      hl = "AlphaHeader",
-      position = "center",
-    }
-    dashboard.section.footer.opts = {
-      position = "center",
-    }
+      -- Customize footer and header options
+      dashboard.section.footer.val = footer()
+      dashboard.section.header.opts = {
+        hl = 'AlphaHeader',
+        position = 'center',
+      }
+      dashboard.section.footer.opts = {
+        position = 'center',
+      }
 
-    local alpha = require("alpha")
-    alpha.setup(dashboard.config)
-  end,
-}}
-
+      local alpha = require 'alpha'
+      alpha.setup(dashboard.config)
+    end,
+  },
+}
