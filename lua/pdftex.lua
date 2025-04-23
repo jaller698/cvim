@@ -97,12 +97,18 @@ vim.api.nvim_create_autocmd('FileType', {
         './main.tex',
       }
 
-      -- Run in background
+      local open_cmd = {
+        'xdg-open',
+        './' .. foldername .. '.pdf',
+      }
+
+      print '🚀 Starting LaTeX build...'
       vim.system(cmd, { text = true }, function(result)
         if result.code == 0 then
           vim.schedule(function()
             print '✅ LaTeX build successful!'
-            vim.cmd('!open ' .. foldername .. '.pdf')
+            print('📄 Opening PDF: ' .. foldername .. '.pdf')
+            vim.system(open_cmd, { text = true })
           end)
         else
           vim.schedule(function()
