@@ -195,7 +195,15 @@ return {
         },
       },
     }
-
+    require('lspconfig').texlab.setup {
+      on_attach = function(client, _)
+        -- make sure completion capability is advertised
+        client.server_capabilities.completionProvider = true
+      end,
+      settings = {
+        texlab = { build = { onSave = false } },
+      },
+    }
     -- Ensure the servers and tools above are installed
     --
     -- To check the current status of installed tools and/or manually install
