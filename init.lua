@@ -27,6 +27,7 @@ if vim.g.neovide then
 end
 require 'keymaps'
 require 'pdftex'
+require 'file-detecor'
 
 -- [[ Configure and install plugins ]]
 --
