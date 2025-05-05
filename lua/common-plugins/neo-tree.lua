@@ -14,6 +14,52 @@ return {
         vim.ui.open(state.tree:get_node():get_id())
       end,
     },
+    source_selector = {
+      winbar = true, -- toggle to show selector on winbar
+      statusline = true, -- toggle to show selector on statusline
+      show_scrolled_off_parent_node = false, -- boolean
+      sources = { -- table
+        {
+          source = 'filesystem', -- string
+          display_name = ' 󰉓 Files ', -- string | nil
+        },
+        {
+          source = 'buffers', -- string
+          display_name = ' 󰈚 Buffers ', -- string | nil
+        },
+        {
+          source = 'git_status', -- string
+          display_name = ' 󰊢 Git ', -- string | nil
+        },
+      },
+      content_layout = 'start', -- string
+      tabs_layout = 'equal', -- string
+      truncation_character = '…', -- string
+      tabs_min_width = nil, -- int | nil
+      tabs_max_width = nil, -- int | nil
+      padding = 0, -- int | { left: int, right: int }
+      separator = { left = '▏', right = '▕' }, -- string | { left: string, right: string, override: string | nil }
+      separator_active = nil, -- string | { left: string, right: string, override: string | nil } | nil
+      show_separator_on_edge = false, -- boolean
+      highlight_tab = 'NeoTreeTabInactive', -- string
+      highlight_tab_active = 'NeoTreeTabActive', -- string
+      highlight_background = 'NeoTreeTabInactive', -- string
+      highlight_separator = 'NeoTreeTabSeparatorInactive', -- string
+      highlight_separator_active = 'NeoTreeTabSeparatorActive', -- string
+    },
+
+    filesystem = {
+      bind_to_cwd = true,
+      cwd_target = {
+        sidebar = 'tab', -- sidebar is when position = left or right
+        current = 'window', -- current is when position = current
+      },
+
+      follow_current_file = { enabled = true },
+      hijack_netrw_behavior = 'open_current',
+      use_libuv_file_watcher = vim.fn.has 'win32' ~= 1,
+    },
+
     default_component_configs = {
       name = { use_git_status_colors = true },
       close_if_last_window = true,
@@ -53,6 +99,7 @@ return {
           },
         },
       },
+
       event_handlers = {
         {
           event = 'file_opened',
@@ -98,7 +145,18 @@ return {
     vim.api.nvim_create_autocmd('TermClose', {
       pattern = '*lazygit*',
       callback = function()
-        require('neo-tree.sources.filesystem.commands').refresh(require('neo-tree.sources.manager').get_state 'filesystem')
+        local win_exists = false
+        for _, win in ipairs(vim.api.nvim_list_wins()) do
+          local bufname = vim.api.nvim_buf_get_name(vim.api.nvim_win_get_buf(win))
+          if bufname:match 'neo%-tree' then
+            win_exists = true
+            break
+          end
+        end
+
+        if win_exists then
+          require('neo-tree.sources.filesystem.commands').refresh(require('neo-tree.sources.manager').get_state 'filesystem')
+        end
       end,
     })
 
