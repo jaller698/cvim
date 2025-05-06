@@ -27,7 +27,25 @@ if vim.g.neovide then
 end
 require 'keymaps'
 require 'pdftex'
-require 'file-detecor'
+require 'file-detector'
+
+vim.keymap.set('n', '<leader>fe', function()
+  require('file-picker').open()
+end, { desc = 'Open custom file picker' })
+
+-- Disable netrw so it won’t hijack the startup directory
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
+-- On editor start (with no file argument), open your picker instead
+vim.api.nvim_create_autocmd('VimEnter', {
+  callback = function()
+    -- only run if no files were passed on the command line
+    if vim.fn.argc() == 0 then
+      require('my_file_browser').open()
+    end
+  end,
+})
 
 -- [[ Configure and install plugins ]]
 --
