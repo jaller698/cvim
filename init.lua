@@ -33,16 +33,20 @@ vim.keymap.set('n', '<leader>fe', function()
   require('file-picker').open()
 end, { desc = 'Open custom file picker' })
 
--- Disable netrw so it won’t hijack the startup directory
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
-
--- On editor start (with no file argument), open your picker instead
 vim.api.nvim_create_autocmd('VimEnter', {
   callback = function()
-    -- only run if no files were passed on the command line
-    if vim.fn.argc() == 0 then
-      require('my_file_browser').open()
+    -- disable netrw so nothing jumps in front of your picker/dashboard
+    vim.g.loaded_netrw = 1
+    vim.g.loaded_netrwPlugin = 1
+
+    local argc = vim.fn.argc()
+    -- no files → show alpha dashboard
+    if argc == 0 then
+      require('alpha').start(true)
+
+    -- exactly one argument, and it’s a directory → open file-picker
+    elseif argc == 1 and vim.fn.isdirectory(vim.fn.argv(0)) == 1 then
+      require('file-picker').open()
     end
   end,
 })
