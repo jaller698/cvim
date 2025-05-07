@@ -1,5 +1,5 @@
 local filetypes = {
-  ['*.tex'] = 'latex',
+  ['*.tex'] = 'tex',
   ['*ockerfile*'] = 'dockerfile',
   ['*enkinsfile'] = 'groovy',
 }
