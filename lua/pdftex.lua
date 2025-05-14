@@ -127,3 +127,31 @@ vim.api.nvim_create_autocmd('FileType', {
     vim.keymap.set('n', '<leader>di', '<cmd>InsertItemize<CR>', { buffer = true, desc = 'Insert LaTeX Itemize List' })
   end,
 })
+
+local function open_pdf_page_kitty(filepath, page, width)
+  page = page or 1
+  width = width or 800
+
+  -- build the pipeline string
+  local pipeline = string.format('pdftoppm -png -f %d -l %d -scale-to-x %d %q - | kitty +kitten icat --transfer-mode=stream', page, page, width, filepath)
+
+  -- open a vertical split and size it
+  vim.cmd 'vsplit'
+  vim.cmd 'wincmd l'
+  vim.cmd 'resize 30'
+
+  -- launch the shell in the terminal buffer, preserving the -c argument
+  vim.fn.termopen { 'sh', '-c', pipeline }
+  vim.cmd 'startinsert'
+end
+
+-- Define :PdfKitty
+vim.api.nvim_create_user_command('PdfKitty', function(opts)
+  local args = vim.split(opts.args, '%s+')
+  open_pdf_page_kitty(args[1], tonumber(args[2]), tonumber(args[3]))
+end, {
+  nargs = '+',
+  complete = function(lead)
+    return vim.fn.getcompletion(lead, 'file')
+  end,
+})

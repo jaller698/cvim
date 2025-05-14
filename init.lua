@@ -59,7 +59,15 @@ local plugins = {
     -- dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' }, -- if you prefer nvim-web-devicons
     ---@module 'render-markdown'
     ---@type render.md.UserConfig
-    opts = {},
+    opts = {
+      latex = {
+        enabled = true,
+        render_modes = true,
+        converter = 'latex2text',
+        highlight = 'RenderMarkdownMath',
+        position = 'below',
+      },
+    },
   },
 }
 if get_git_repo_name() == 'DCI' then
