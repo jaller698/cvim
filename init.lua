@@ -52,6 +52,7 @@ local plugins = {
     main = 'ibl',
     opts = {},
   },
+  { 'simrat39/symbols-outline.nvim', opts = {} },
   {
     'MeanderingProgrammer/render-markdown.nvim',
     dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.nvim' }, -- if you use the mini.nvim suite
@@ -71,6 +72,7 @@ local plugins = {
   },
 }
 if get_git_repo_name() == 'DCI' then
+  vim.print(get_git_repo_name())
   vim.list_extend(plugins, require 'dci')
 end
 

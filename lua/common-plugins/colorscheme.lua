@@ -16,9 +16,11 @@ return {
       -- Load the colorscheme here.
       -- Like many other themes, this one has different styles, and you could load
       -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-      vim.cmd.colorscheme 'tokyonight-night'
+      vim.cmd.colorscheme 'tokyonight'
     end,
   },
+  { 'sainnhe/everforest' },
+  { 'protesilaos/tempus-themes-vim' },
   { 'catppuccin/nvim', name = 'catppuccin', priority = 1000 },
   { 'kepano/flexoki-neovim', name = 'flexoki' },
   { 'AlexvZyl/nordic.nvim', lazy = false, priority = 1000 },
@@ -30,7 +32,6 @@ return {
     },
     config = function(_, opts)
       require('tokyodark').setup(opts) -- calling setup is optional
-      vim.cmd.colorscheme 'tokyodark'
     end,
   },
 }

@@ -54,6 +54,14 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 
+vim.keymap.set("n", "<leader>L", function()
+  require("snakcs").terminal.open("lynx https://tldr.tech/newsletters", {
+    border = "rounded",
+    width = 0.9,
+    height = 0.9,
+  })
+end, { desc = "Open lynx in floating terminal" })
+
 -- Show errors and warnings in a floating window
 vim.api.nvim_create_autocmd('CursorHold', {
   callback = function()

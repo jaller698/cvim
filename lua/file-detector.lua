@@ -1,7 +1,7 @@
 local filetypes = {
   ['*.tex'] = 'tex',
   ['*ockerfile*'] = 'dockerfile',
-  ['*enkinsfile'] = 'groovy',
+  ['*enkinsfile*'] = 'groovy',
 }
 
 for pattern, ft in pairs(filetypes) do
