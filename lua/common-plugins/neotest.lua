@@ -39,7 +39,7 @@ return {
     vim.api.nvim_create_autocmd('FileType', {
       pattern = { 'python', 'rust', 'c', 'cpp' },
       callback = function(args)
-        require('neotest').watch.watch()
+        -- require('neotest').watch.watch()
         local buf = args.buf
         local map = function(lhs, fn, desc)
           vim.keymap.set('n', lhs, fn, { buffer = buf, desc = desc })
