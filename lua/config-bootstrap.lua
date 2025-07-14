@@ -1,61 +1,38 @@
 local function update_config()
-  local last_update_file = vim.fn.stdpath 'state' .. '/last_update_time' -- File to store last update time
+  local state_dir = vim.fn.stdpath 'state'
+  local last_update_file = state_dir .. '/last_update_time'
   local current_time = os.time()
-  local one_day_in_seconds = 24 * 60 * 60
+  local one_day = 24 * 60 * 60
 
-  -- Check if the last update file exists and read the time
-  local last_update_time = nil
+  local last_update_time
   if vim.fn.filereadable(last_update_file) == 1 then
-    local file = io.open(last_update_file, 'r')
-    if file then
-      last_update_time = tonumber(file:read '*all')
-      file:close()
-    end
+    local content = vim.fn.readfile(last_update_file)
+    last_update_time = tonumber(content[1])
   end
-  -- If the last update was more than a day ago, run the update
-  if not last_update_time or (current_time - last_update_time) > one_day_in_seconds then
-    -- Path to your local git repository
-    local repo_path = vim.fn.stdpath 'config' -- Assuming your config repo is the Neovim config directory
-    -- Command to pull the latest changes
-    local pull_command = { 'git', '-C', repo_path, 'pull' }
 
-    -- Execute the command
-    local result = vim.fn.systemlist(pull_command)
-
-    -- Use vim.notify for notification
+  if not last_update_time or (current_time - last_update_time) > one_day then
+    local repo_path = vim.fn.stdpath 'config'
+    local result = vim.fn.systemlist { 'git', '-C', repo_path, 'pull' }
     if vim.v.shell_error == 0 then
-      vim.print 'Configuration updated successfully!'
-
-      -- Save the current time to the file as the last update time
-      local file = io.open(last_update_file, 'w')
-      if file then
-        file:write(tostring(current_time))
-        file:close()
-      end
+      vim.notify('Configuration updated successfully!', vim.log.levels.INFO)
+      vim.fn.writefile({ tostring(current_time) }, last_update_file)
     else
-      vim.print('Failed to update configuration!', vim.log.levels.ERROR)
-      -- Optional: Show detailed error messages
+      vim.notify('Failed to update configuration!', vim.log.levels.ERROR)
       for _, line in ipairs(result) do
         vim.notify(line, vim.log.levels.ERROR)
       end
     end
   else
-    vim.print 'Configuration already updated today.'
+    vim.notify('Configuration already updated today.', vim.log.levels.INFO)
   end
 end
+
 update_config()
 
 local function is_wsl()
-  -- Check for the WSL_INTEROP environment variable
-  if vim.fn.getenv 'WSL_INTEROP' ~= vim.NIL then
+  if os.getenv 'WSL_INTEROP' then
     return true
   end
-
-  -- Check for "microsoft" in the output of `uname -r`
   local uname = vim.fn.system 'uname -r'
-  if uname:lower():find 'microsoft' then
-    return true
-  end
-
-  return false
+  return uname:lower():find 'microsoft' ~= nil
 end
