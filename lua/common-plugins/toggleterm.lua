@@ -18,6 +18,9 @@ return {
       { '<leader>tv', '<cmd>ToggleTerm direction=vertical<CR>', desc = 'Toggle vertical terminal' },
     },
     config = function(_, opts)
+      if vim.fn.has 'win32' == 1 then
+        opts.shell = 'powershell'
+      end
       require('toggleterm').setup(opts)
     end,
   },

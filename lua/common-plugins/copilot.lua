@@ -1,6 +1,7 @@
 return {
   {
     'github/copilot.vim',
+    event = 'InsertEnter',
     config = function(_, opts)
       -- Set the copilot config options here
       --  Setup the copilot to complete using C-a
@@ -46,6 +47,7 @@ return {
   },
   {
     'olimorris/codecompanion.nvim',
+    cmd = { 'CodeCompanion', 'CodeCompanionChat' },
     opts = {
       strategies = {
         chat = {

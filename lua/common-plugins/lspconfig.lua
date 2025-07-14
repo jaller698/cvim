@@ -5,12 +5,12 @@ return {
     -- Automatically install LSPs and related tools to stdpath for Neovim
     -- Mason must be loaded before its dependents so we need to set it up here.
     -- NOTE: `opts = {}` is the same as calling `require('mason').setup({})`
-    { 'williamboman/mason.nvim', opts = {} },
+    { 'williamboman/mason.nvim', opts = {}, cmd = { 'Mason', 'MasonUpdate', 'MasonInstall', 'MasonUninstall' } },
     'williamboman/mason-lspconfig.nvim',
     'WhoIsSethDaniel/mason-tool-installer.nvim',
 
     -- Useful status updates for LSP.
-    { 'j-hui/fidget.nvim', opts = {} },
+    { 'j-hui/fidget.nvim', opts = {}, event = 'LspAttach' },
 
     -- Allows extra capabilities provided by nvim-cmp
     'hrsh7th/nvim-cmp',
