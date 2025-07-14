@@ -15,6 +15,7 @@ return {
     scope = { enabled = true },
     scroll = { enabled = true },
     statuscolumn = { enabled = true },
+    scratch = { enabled = true },
     words = { enabled = true },
     styles = {
       notification = {
@@ -280,6 +281,20 @@ return {
         Snacks.picker.colorschemes()
       end,
       desc = 'Colorschemes',
+    },
+    {
+      '<leader>.',
+      function()
+        Snacks.scratch()
+      end,
+      desc = 'Toggle Scratch Buffer',
+    },
+    {
+      '<leader>S',
+      function()
+        Snacks.scratch.select()
+      end,
+      desc = 'Select Scratch Buffer',
     },
 
     -- LSP
