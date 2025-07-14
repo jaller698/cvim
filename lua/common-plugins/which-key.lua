@@ -54,6 +54,8 @@ return { -- Useful plugin to show you pending keybinds.
       { '<leader>b', group = '[B]uffers' },
       { '<leader>s', group = '[S]earch' },
       { '<leader>u', group = '[U]tils' },
+      { '<leader>U', group = '[U]sage' },
+      { '<leader>x', group = 'e[X]ecute commands' },
     },
   },
 }
