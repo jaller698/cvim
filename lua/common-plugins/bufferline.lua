@@ -62,5 +62,9 @@ return {
         vim.cmd 'enew'
       end
     end, { desc = 'Close current buffer' })
+    vim.keymap.set('n', '<leader>bp', '<cmd>BufferLinePick<CR>', { desc = 'Pick a buffer' })
+    vim.keymap.set('n', '<leader>bl', '<cmd>BufferLineCloseLeft<CR>', { desc = 'Close all buffers to the left' })
+    vim.keymap.set('n', '<leader>br', '<cmd>BufferLineCloseRight<CR>', { desc = 'Close all buffers to the right' })
+    vim.keymap.set('n', '<leader>ba', '<cmd>BufferLineCloseOthers<CR>', { desc = 'Close all other buffers' })
   end,
 }

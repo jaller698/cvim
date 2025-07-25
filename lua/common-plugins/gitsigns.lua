@@ -1,7 +1,12 @@
 return -- See `:help gitsigns` to understand what the configuration keys do
 {
   'lewis6991/gitsigns.nvim',
+  event = 'VeryLazy',
   opts = {
+    preview_config = {
+      row = 1,
+      col = 0,
+    },
     on_attach = function(bufnr)
       local gitsigns = require 'gitsigns'
 
@@ -46,8 +51,8 @@ return -- See `:help gitsigns` to understand what the configuration keys do
       map('n', '<leader>gb', gitsigns.blame_line, { desc = 'git [b]lame line' })
       map('n', '<leader>gd', gitsigns.diffthis, { desc = 'git [d]iff against index' })
       map('n', '<leader>gD', function()
-        gitsigns.diffthis '@'
-      end, { desc = 'git [D]iff against last commit' })
+        gitsigns.diffthis 'origin/HEAD'
+      end, { desc = 'git [D]iff against HEAD' })
       -- Toggles
       map('n', '<leader>tb', gitsigns.toggle_current_line_blame, { desc = '[T]oggle git show [b]lame line' })
       map('n', '<leader>tD', gitsigns.preview_hunk_inline, { desc = '[T]oggle git show [D]eleted' })

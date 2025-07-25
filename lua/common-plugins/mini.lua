@@ -16,6 +16,17 @@ return { -- Collection of various small independent plugins/modules
     -- - sr)'  - [S]urround [R]eplace [)] [']
     require('mini.surround').setup()
 
+    require('mini.diff').setup {
+      -- Set the maximum number of lines to show in diff mode
+      n_lines = 500,
+      -- Set the default mode to 'n' (normal mode)
+      default_mode = 'n',
+    }
+    vim.keymap.set('n', '<leader>gm', function()
+      local file = vim.fn.expand '%'
+      require('mini.diff').toggle_overlay(0)
+    end, { desc = 'MiniDiff: compare buffer with origin/master' })
+
     -- Simple and easy statusline.
     --  You could remove this setup call if you don't like it,
     --  and try some other statusline plugin
