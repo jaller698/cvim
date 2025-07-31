@@ -15,7 +15,7 @@ local function get_git_repo_name()
     local result = handle:read '*a'
     handle:close()
     if result then
-      return vim.fn.fnamemodify(result:gsub('%s+$', ''), ':t')
+      return string.lower(vim.fn.fnamemodify(result:gsub('%s+$', ''), ':t'))
     end
   end
   return nil
@@ -53,7 +53,6 @@ local plugins = {
     opts = {},
   },
   { 'simrat39/symbols-outline.nvim', opts = {}, cmd = { 'SymbolsOutline', 'SymbolsOutlineOpen' } },
-  { 'seandewar/actually-doom.nvim', opts = {} }, -- Stupid, but cool!
   {
     'MeanderingProgrammer/render-markdown.nvim',
     dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.nvim' }, -- if you use the mini.nvim suite
@@ -73,9 +72,12 @@ local plugins = {
     },
   },
 }
-if get_git_repo_name() == 'DCI' then
-  vim.print(get_git_repo_name())
+if get_git_repo_name() == 'dci' then
   vim.list_extend(plugins, require 'dci')
+end
+
+if vim.fn.has 'win32' == 0 then
+  vim.list_extend(plugins, { 'seandewar/actually-doom.nvim', opts = {} })
 end
 
 -- NOTE: Here is where you install your plugins.

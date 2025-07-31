@@ -11,11 +11,16 @@ return {
         end
       end,
       -- You can set your default direction here, though our mappings will override it:
-      direction = 'float',
+      direction = 'vertical',
     },
     keys = {
       { '<leader>th', '<cmd>ToggleTerm direction=horizontal<CR>', desc = 'Toggle horizontal terminal' },
       { '<leader>tv', '<cmd>ToggleTerm direction=vertical<CR>', desc = 'Toggle vertical terminal' },
+      { '<leader>tf', '<cmd>ToggleTerm direction=float<CR>', desc = 'Toggle floating terminal' },
+      { '<leader>tnv', '<cmd>TermNew direction=vertical<CR>', desc = 'New vertical terminal' },
+      { '<leader>tnh', '<cmd>TermNew direction=horizontal<CR>', desc = 'New horizontal terminal' },
+      { '<leader>tnf', '<cmd>TermNew direction=float<CR>', desc = 'New floating terminal' },
+      { '<leader>tq', '<cmd>ToggleTermToggleAll<CR>', desc = 'Toggle all terminals' },
     },
     config = function(_, opts)
       if vim.fn.has 'win32' == 1 then

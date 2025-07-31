@@ -194,6 +194,11 @@ return {
           },
         },
       },
+      clangd = {
+        cmd = { 'clangd', '--background-index' }, -- Use the clangd binary installed by mason
+        filetypes = { 'c', 'cpp', 'objc', 'objcpp' },
+        capabilities = capabilities,
+      },
     }
     require('lspconfig').texlab.setup {
       on_attach = function(client, _)
