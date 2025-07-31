@@ -54,6 +54,17 @@ local plugins = {
   },
   { 'simrat39/symbols-outline.nvim', opts = {}, cmd = { 'SymbolsOutline', 'SymbolsOutlineOpen' } },
   {
+    'lambdalisue/vim-suda',
+    opts = {},
+    config = function()
+      -- Enable suda for all filetypes
+      vim.g.suda_smart_edit = 1
+      vim.g.suda_smart_cd = 1
+      vim.g.suda_no_default_mappings = 1
+    end,
+  },
+  { 'seandewar/actually-doom.nvim', opts = {}, cond = vim.fn.has 'win32' == 0 }, -- Only load on non-Windows systems
+  {
     'MeanderingProgrammer/render-markdown.nvim',
     dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.nvim' }, -- if you use the mini.nvim suite
     -- dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.icons' }, -- if you use standalone mini plugins
