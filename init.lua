@@ -42,6 +42,8 @@ end, { desc = 'Open custom file picker' })
 --
 --  To update plugins you can run
 --    :Lazy update
+require('custom-plugins.markdown-runner').setup()
+
 local plugins = {
   { import = 'common-plugins' },
   { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
