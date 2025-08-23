@@ -56,6 +56,20 @@ local plugins = {
   },
   { 'simrat39/symbols-outline.nvim', opts = {}, cmd = { 'SymbolsOutline', 'SymbolsOutlineOpen' } },
   {
+    'IstiCusi/docpair.nvim',
+    main = 'docpair',
+    lazy = false, -- eager so :Documented has filename completion immediately
+    opts = { info_filetype = 'markdown' },
+    config = true,
+  },
+  {
+    'bngarren/checkmate.nvim',
+    ft = 'markdown', -- Lazy loads for Markdown files matching patterns in 'files'
+    opts = {
+      files = { '**_info', '**.md' },
+    },
+  },
+  {
     'lambdalisue/vim-suda',
     opts = {},
     config = function()

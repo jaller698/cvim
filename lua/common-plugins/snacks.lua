@@ -384,7 +384,7 @@ return {
       end,
     },
     {
-      '<leader>T',
+      '<leader>m',
       desc = 'Neovim Newsletter',
       function()
         local tui_news = require 'tui_newsletter'
