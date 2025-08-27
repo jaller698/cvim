@@ -1,4 +1,4 @@
-version: 39
+version: 40
 jobs:
 - name: sync pipeline
   steps:
@@ -8,9 +8,30 @@ jobs:
     userName: jaller698
     passwordSecret: github_access_token
     force: false
-    condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
+    condition: SUCCESSFUL
+    optional: false
   triggers:
   - !BranchUpdateTrigger {}
+  retryCondition: never
+  maxRetries: 3
+  retryDelay: 30
+  timeout: 14400
+- name: Pull from github every day at 17:00
+  steps:
+  - !PullRepository
+    name: Pull from github
+    remoteUrl: https://github.com/jaller698/cvim
+    userName: jaller698
+    passwordSecret: github_access_token
+    refs: refs/heads/* refs/tags/*
+    withLfs: false
+    force: false
+    condition: SUCCESSFUL
+    optional: false
+  triggers:
+  - !ScheduleTrigger
+    cronExpression: 0 17 * * * ?
+    branches: master
   retryCondition: never
   maxRetries: 3
   retryDelay: 30
