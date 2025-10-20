@@ -200,15 +200,16 @@ return {
         capabilities = capabilities,
       },
     }
-    require('lspconfig').texlab.setup {
-      on_attach = function(client, _)
-        -- make sure completion capability is advertised
-        client.server_capabilities.completionProvider = true
-      end,
-      settings = {
-        texlab = { build = { onSave = false } },
-      },
-    }
+    --    The `require('lspconfig')` "framework" is deprecated, use vim.lsp.config (see :help lspconfig-nvim-0.11) instead. Feature will be removed in nvim-lspconfig v3.0.0
+    -- require('lspconfig').texlab.setup {
+    --   on_attach = function(client, _)
+    --     -- make sure completion capability is advertised
+    --     client.server_capabilities.completionProvider = true
+    --   end,
+    --   settings = {
+    --     texlab = { build = { onSave = false } },
+    --   },
+    -- }
     -- Ensure the servers and tools above are installed
     --
     -- To check the current status of installed tools and/or manually install
@@ -238,7 +239,7 @@ return {
           -- by the server configuration above. Useful when disabling
           -- certain features of an LSP (for example, turning off formatting for ts_ls)
           server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
-          require('lspconfig')[server_name].setup(server)
+          vim.lsp.config(server_name).setup(server)
         end,
       },
     }
