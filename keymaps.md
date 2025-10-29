@@ -87,15 +87,15 @@ This document provides a comprehensive reference for the most important and cust
 | `<leader>gS` | Normal | Stage buffer |
 | `<leader>gu` | Normal | Undo stage hunk |
 | `<leader>gR` | Normal | Reset buffer |
-| `<leader>gp` | Normal | Preview hunk |
-| `<leader>gb` | Normal | Blame line / Git branches (Snacks) |
-| `<leader>gd` | Normal | Git diff against index / Diff hunks (Snacks) |
-| `<leader>gD` | Normal | Git diff against HEAD |
+| `<leader>gp` | Normal | Preview hunk (gitsigns) |
+| `<leader>gb` | Normal | Git branches (Snacks) * |
+| `<leader>gd` | Normal | Git diff hunks (Snacks) * |
+| `<leader>gD` | Normal | Git diff against HEAD (gitsigns) |
 | `<leader>gg` | Normal | Open Lazygit |
 | `<leader>gl` | Normal | Git log (Snacks) |
 | `<leader>gL` | Normal | Git log line (Snacks) |
 | `<leader>gf` | Normal | Git log file (Snacks) |
-| `<leader>gS` | Normal | Git stash (Snacks) |
+| `<leader>gS` | Normal | Git stash (Snacks) * |
 | `<leader>tb` | Normal | Toggle git blame line |
 | `<leader>tD` | Normal | Toggle git show deleted |
 
@@ -216,6 +216,7 @@ Commands:
 - **Highlight on Yank**: Text is briefly highlighted when copied (automatic)
 - **Diagnostic Float on Cursor Hold**: Diagnostics automatically show when cursor is held on an error/warning
 - **Working Directory Management**: Automatically sets working directory on startup
+- **Keymap Conflicts**: Some keymaps marked with * may conflict between plugins (gitsigns vs Snacks). The Snacks keymaps typically override gitsigns since they're loaded later. Use `:map <leader>gX` to check which command is active for a specific key.
 
 ---
 

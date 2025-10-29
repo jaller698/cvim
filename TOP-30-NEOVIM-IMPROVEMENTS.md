@@ -52,7 +52,7 @@ This document outlines 30 high-impact improvements for this Neovim configuration
 - [ ] **9. Implement session management**
   - Add automatic session save/restore on directory basis
   - Configure session to remember open buffers, window layout, and working directory
-  - Use `vim-session` or implement custom Lua-based solution with `mksession`
+  - Consider plugins like `auto-session`, `possession.nvim`, or implement custom Lua-based solution with `mksession`
 
 - [ ] **10. Enhanced quickfix/location list workflow**
   - Add keymaps for quickly navigating quickfix items (`]q`, `[q`)
@@ -125,10 +125,10 @@ This document outlines 30 high-impact improvements for this Neovim configuration
   - Add inline comments for complex logic
 
 - [ ] **21. Implement health check system**
-  - Create custom health checks for project-specific requirements
+  - Create custom health checks for project-specific requirements (`:checkhealth custom`)
   - Verify external dependencies (ripgrep, fd, lazygit) are installed
   - Check for conflicting configurations or deprecated options
-  - Add `:checkhealth cvim` command
+  - Add custom health check module for this configuration
 
 - [ ] **22. Version control for configuration**
   - Add `.git-blame-ignore-revs` for formatting commits
