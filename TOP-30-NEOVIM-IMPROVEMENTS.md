@@ -125,7 +125,7 @@ This document outlines 30 high-impact improvements for this Neovim configuration
   - Add inline comments for complex logic
 
 - [ ] **21. Implement health check system**
-  - Create custom health checks for project-specific requirements (`:checkhealth custom`)
+  - Create custom health checks for project-specific requirements (`:checkhealth nvim-config`)
   - Verify external dependencies (ripgrep, fd, lazygit) are installed
   - Check for conflicting configurations or deprecated options
   - Add custom health check module for this configuration

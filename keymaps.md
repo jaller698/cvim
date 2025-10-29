@@ -87,10 +87,10 @@ This document provides a comprehensive reference for the most important and cust
 | `<leader>gS` | Normal | Stage buffer |
 | `<leader>gu` | Normal | Undo stage hunk |
 | `<leader>gR` | Normal | Reset buffer |
-| `<leader>gp` | Normal | Preview hunk (gitsigns) |
-| `<leader>gb` | Normal | Git branches (Snacks) * |
-| `<leader>gd` | Normal | Git diff hunks (Snacks) * |
-| `<leader>gD` | Normal | Git diff against HEAD (gitsigns) |
+| `<leader>gp` | Normal | Preview hunk * |
+| `<leader>gb` | Normal | Git branches * |
+| `<leader>gd` | Normal | Git diff hunks * |
+| `<leader>gD` | Normal | Git diff against HEAD * |
 | `<leader>gg` | Normal | Open Lazygit |
 | `<leader>gl` | Normal | Git log (Snacks) |
 | `<leader>gL` | Normal | Git log line (Snacks) |
