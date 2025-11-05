@@ -34,12 +34,18 @@ vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper win
 vim.keymap.set('n', '<leader>dd', vim.diagnostic.open_float, { desc = 'Open diagnostic float' })
 vim.keymap.set('n', '<leader>dD', vim.diagnostic.setqflist, { desc = 'Show all diagnostics in quickfix' })
 
--- NOTE: Some terminals have coliding keymaps or are not able to send distinct keycodes
--- vim.keymap.set("n", "<C-S-h>", "<C-w>H", { desc = "Move window to the left" })
--- vim.keymap.set("n", "<C-S-l>", "<C-w>L", { desc = "Move window to the right" })
--- vim.keymap.set("n", "<C-S-j>", "<C-w>J", { desc = "Move window to the lower" })
--- vim.keymap.set("n", "<C-S-k>", "<C-w>K", { desc = "Move window to the upper" })
+-- Quickfix navigation keymaps
+vim.keymap.set('n', ']q', ':cnext<CR>', { noremap = true, silent = true, desc = 'Next quickfix item' })
+vim.keymap.set('n', '[q', ':cprev<CR>', { noremap = true, silent = true, desc = 'Previous quickfix item' })
+vim.keymap.set('n', ']Q', ':clast<CR>', { noremap = true, silent = true, desc = 'Last quickfix item' })
+vim.keymap.set('n', '[Q', ':cfirst<CR>', { noremap = true, silent = true, desc = 'First quickfix item' })
 
+-- Window management keymaps
+vim.keymap.set('n', '<leader>wv', ':vsplit<CR>', { noremap = true, silent = true, desc = 'Split window vertically' })
+vim.keymap.set('n', '<leader>wh', ':split<CR>', { noremap = true, silent = true, desc = 'Split window horizontally' })
+vim.keymap.set('n', '<leader>we', '<C-w>=', { noremap = true, silent = true, desc = 'Equalize window sizes' })
+vim.keymap.set('n', '<leader>wm', ':only<CR>', { noremap = true, silent = true, desc = 'Maximize current window (close others)' })
+vim.keymap.set('n', '<leader>wq', ':close<CR>', { noremap = true, silent = true, desc = 'Close current window' })
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 

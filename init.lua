@@ -28,6 +28,7 @@ end
 require 'keymaps'
 require 'pdftex'
 require 'file-detector'
+require 'buffer-cleanup'
 
 vim.keymap.set('n', '<leader>fe', function()
   require('file-picker').open()

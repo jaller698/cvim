@@ -42,6 +42,9 @@ vim.opt.undofile = true
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
 
+-- Enable faster Lua-based filetype detection
+vim.g.do_filetype_lua = 1
+
 -- Keep signcolumn on by default
 vim.opt.signcolumn = 'yes'
 
@@ -84,3 +87,19 @@ vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
 -- Diagnostic keymaps
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
+
+-- Configure diagnostics display
+vim.diagnostic.config {
+  virtual_text = {
+    severity = { min = vim.diagnostic.severity.WARN }, -- Only show warnings and errors
+    source = 'if_many',
+  },
+  float = {
+    source = 'if_many',
+    border = 'rounded',
+  },
+  signs = true,
+  underline = true,
+  update_in_insert = false,
+  severity_sort = true,
+}
