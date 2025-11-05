@@ -6,7 +6,7 @@ This document outlines 30 high-impact improvements for this Neovim configuration
 
 ## Performance & Speed Optimization
 
-- [ ] **1. Lazy-load more plugins by event/filetype**
+- [x] **1. Lazy-load more plugins by event/filetype**
   - Review all plugins in `lua/common-plugins/` and ensure they use `lazy = true`, `event`, `ft`, `cmd`, or `keys` to defer loading until actually needed
   - Benchmark startup time with `:Lazy profile` to identify slow-loading plugins
 

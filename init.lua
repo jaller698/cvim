@@ -53,6 +53,7 @@ local plugins = {
     -- Enable `lukas-reineke/indent-blankline.nvim`
     -- See `:help ibl`
     main = 'ibl',
+    event = 'VimEnter',
     opts = {},
   },
   { 'simrat39/symbols-outline.nvim', opts = {}, cmd = { 'SymbolsOutline', 'SymbolsOutlineOpen' } },
@@ -61,6 +62,7 @@ local plugins = {
     main = 'docpair',
     lazy = false, -- eager so :Documented has filename completion immediately
     opts = { info_filetype = 'markdown' },
+    cmd = { 'Documented', 'DocpairToggle' },
     config = true,
   },
   {
@@ -73,6 +75,7 @@ local plugins = {
   {
     'lambdalisue/vim-suda',
     opts = {},
+    cmd = { 'SudaRead', 'SudaWrite' },
     config = function()
       -- Enable suda for all filetypes
       vim.g.suda_smart_edit = 1
@@ -80,7 +83,7 @@ local plugins = {
       vim.g.suda_no_default_mappings = 1
     end,
   },
-  { 'seandewar/actually-doom.nvim', opts = {}, cond = vim.fn.has 'win32' == 0 }, -- Only load on non-Windows systems
+  { 'seandewar/actually-doom.nvim', opts = {}, cond = vim.fn.has 'win32' == 0, event = 'VeryLazy' }, -- Only load on non-Windows systems
   {
     'MeanderingProgrammer/render-markdown.nvim',
     dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.nvim' }, -- if you use the mini.nvim suite

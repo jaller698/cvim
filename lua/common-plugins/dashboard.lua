@@ -1,6 +1,9 @@
 return {
   {
     'goolord/alpha-nvim',
+    cond = function()
+      return vim.fn.argc() == 0
+    end,
     config = function(_, _)
       vim.api.nvim_set_hl(0, 'AlphaHeader', { fg = '#ff4400' })
 

@@ -1,5 +1,6 @@
 return {
   'scalameta/nvim-metals',
+  event = 'LspAttach',
   ft = { 'scala', 'sbt', 'java' },
   opts = function()
     local metals_config = require('metals').bare_config()

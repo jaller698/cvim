@@ -3,6 +3,7 @@ return {
   dependencies = {
     'MunifTanjim/nui.nvim',
   },
+  cmd = { 'ExecutorOpen', 'ExecutorClose', 'ExecutorToggle' },
   config = function()
     -- your setup here
     require('executor').setup {

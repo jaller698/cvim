@@ -10,6 +10,7 @@ return {
     'rouge8/neotest-rust',
     'nvim-neotest/neotest-vim-test',
   },
+  cmd = { 'Neotest', 'NeotestSummary', 'NeotestOutput', 'NeotestOutputPanel' },
   build = function()
     -- for example, install `cargo-nextest` if you want a nextest runner:
     vim.fn.system {

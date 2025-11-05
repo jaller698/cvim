@@ -1,6 +1,7 @@
 return {
   {
     'akinsho/toggleterm.nvim',
+    cmd = { 'ToggleTerm', 'TermNew', 'TermExec', 'ToggleTermToggleAll' },
     opts = {
       open_mapping = [[<c-å>]], -- Default mapping to toggle terminal; feel free to change or remove
       size = function(term)

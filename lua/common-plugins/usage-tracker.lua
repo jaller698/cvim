@@ -10,6 +10,7 @@ return {
       verbose = 0,
       telemetry_endpoint = '', -- you'll need to start the restapi for this feature
     },
+    event = 'VeryLazy',
     keys = {
       {
         '<leader>Ud',

@@ -34,8 +34,10 @@ return { -- Autocompletion
     'hrsh7th/cmp-nvim-lsp',
     'hrsh7th/cmp-path',
     'hrsh7th/cmp-nvim-lsp-signature-help',
-    'kdheepak/cmp-latex-symbols',
-    ft = { 'tex', 'latex', 'markdown' }, -- Load cmp-latex-symbols only for tex and latex files
+    {
+      'kdheepak/cmp-latex-symbols',
+      ft = { 'tex', 'latex', 'markdown' }, -- Load cmp-latex-symbols only for tex and latex files
+    },
     'L3MON4D3/LuaSnip', -- for snippets
     'saadparwaiz1/cmp_luasnip',
   },
