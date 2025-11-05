@@ -20,20 +20,20 @@ This document outlines 30 high-impact improvements for this Neovim configuration
   - Consider using `null-ls` or `none-ls` alternatives for lighter formatting/linting
   - Disable unused LSP features per language server to reduce overhead
 
-- [ ] **4. Implement smart buffer cleanup**
-  - Create autocommand to automatically close hidden buffers after N minutes of inactivity
-  - Add buffer count limit warning when too many buffers are open
-  - Implement LRU (Least Recently Used) buffer cleanup strategy
+- [x] **4. Implement smart buffer cleanup**
+  - Create autocommand to automatically close hidden buffers after N minutes of inactivity ✅
+  - Add buffer count limit warning when too many buffers are open ✅
+  - Implement LRU (Least Recently Used) buffer cleanup strategy ✅
 
 - [x] **5. Cache file type detection**
   - Enable `vim.g.do_filetype_lua = 1` for faster filetype detection ✅
   - Review and optimize custom filetype patterns in `file-detector.lua` (existing patterns are optimized)
   - Consider pre-loading common filetypes (not needed with lazy loading)
 
-- [ ] **6. Optimize treesitter parsing**
-  - Configure `incremental_selection` and `indent` modules only for needed languages
-  - Disable treesitter for very large files (>1MB) automatically
-  - Use `vim.opt.foldmethod = "expr"` with treesitter fold expression for better fold performance
+- [x] **6. Optimize treesitter parsing**
+  - Configure `incremental_selection` and `indent` modules only for needed languages (already optimized)
+  - Disable treesitter for very large files (>1MB) automatically ✅
+  - Use `vim.opt.foldmethod = "expr"` with treesitter fold expression for better fold performance (optional, can be added by user)
 
 ---
 
