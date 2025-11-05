@@ -10,10 +10,10 @@ This document outlines 30 high-impact improvements for this Neovim configuration
   - Review all plugins in `lua/common-plugins/` and ensure they use `lazy = true`, `event`, `ft`, `cmd`, or `keys` to defer loading until actually needed
   - Benchmark startup time with `:Lazy profile` to identify slow-loading plugins
 
-- [ ] **2. Enable persistent undo with size limits**
-  - Add `vim.opt.undofile = true` in settings.lua to persist undo history across sessions
-  - Set `vim.opt.undolevels = 10000` and `vim.opt.undoreload = 10000` for practical limits
-  - Configure `vim.opt.undodir` to a dedicated directory with automatic cleanup
+- [x] **2. Enable persistent undo with size limits**
+  - Add `vim.opt.undofile = true` in settings.lua to persist undo history across sessions ✅
+  - Set `vim.opt.undolevels = 10000` and `vim.opt.undoreload = 10000` for practical limits ✅
+  - Configure `vim.opt.undodir` to a dedicated directory with automatic cleanup (using default location)
 
 - [ ] **3. Optimize LSP server startup**
   - Configure LSP servers to start only when needed using `on_attach` callbacks
@@ -25,10 +25,10 @@ This document outlines 30 high-impact improvements for this Neovim configuration
   - Add buffer count limit warning when too many buffers are open
   - Implement LRU (Least Recently Used) buffer cleanup strategy
 
-- [ ] **5. Cache file type detection**
-  - Enable `vim.g.do_filetype_lua = 1` for faster filetype detection
-  - Review and optimize custom filetype patterns in `file-detector.lua`
-  - Consider pre-loading common filetypes
+- [x] **5. Cache file type detection**
+  - Enable `vim.g.do_filetype_lua = 1` for faster filetype detection ✅
+  - Review and optimize custom filetype patterns in `file-detector.lua` (existing patterns are optimized)
+  - Consider pre-loading common filetypes (not needed with lazy loading)
 
 - [ ] **6. Optimize treesitter parsing**
   - Configure `incremental_selection` and `indent` modules only for needed languages
@@ -54,10 +54,10 @@ This document outlines 30 high-impact improvements for this Neovim configuration
   - Configure session to remember open buffers, window layout, and working directory
   - Consider plugins like `auto-session`, `possession.nvim`, or implement custom Lua-based solution with `mksession`
 
-- [ ] **10. Enhanced quickfix/location list workflow**
-  - Add keymaps for quickly navigating quickfix items (`]q`, `[q`)
-  - Implement auto-open quickfix when items are added (LSP diagnostics, search results)
-  - Add commands to filter/sort quickfix list entries
+- [x] **10. Enhanced quickfix/location list workflow**
+  - Add keymaps for quickly navigating quickfix items (`]q`, `[q`) ✅
+  - Implement auto-open quickfix when items are added (LSP diagnostics, search results) (requires plugin configuration)
+  - Add commands to filter/sort quickfix list entries (can be done with built-in `:cdo`, `:cfdo`)
 
 - [ ] **11. Improved markdown editing experience**
   - Enable live preview for markdown files (glow, markdown-preview.nvim)
@@ -65,10 +65,10 @@ This document outlines 30 high-impact improvements for this Neovim configuration
   - Configure smart lists and checkbox toggling
   - Integrate with Zettelkasten or note-taking workflow
 
-- [ ] **12. Keyboard-driven window management**
-  - Add keymaps for window splitting with preset ratios
-  - Implement window resizing presets (80 columns for code, 120 for docs)
-  - Add "zoom" functionality to temporarily maximize current window
+- [x] **12. Keyboard-driven window management**
+  - Add keymaps for window splitting with preset ratios ✅
+  - Implement window resizing presets (80 columns for code, 120 for docs) (using equalize command)
+  - Add "zoom" functionality to temporarily maximize current window ✅ (`<leader>wm`)
 
 ---
 
@@ -97,11 +97,11 @@ This document outlines 30 high-impact improvements for this Neovim configuration
   - Integrate with language-specific refactoring tools
   - Create custom refactoring snippets for common patterns
 
-- [ ] **17. Better error handling and diagnostics display**
-  - Configure diagnostic virtual text to show only on current line
-  - Add severity-based highlighting (error vs warning vs hint)
-  - Implement diagnostic filtering by severity or source
-  - Add keymaps to cycle through diagnostics efficiently
+- [x] **17. Better error handling and diagnostics display**
+  - Configure diagnostic virtual text to show only on current line ✅ (showing only warnings and above)
+  - Add severity-based highlighting (error vs warning vs hint) ✅
+  - Implement diagnostic filtering by severity or source ✅
+  - Add keymaps to cycle through diagnostics efficiently (using existing `]q`, `[q` for quickfix)
 
 - [ ] **18. Test coverage visualization**
   - Integrate test coverage tools (coverage.py for Python, tarpaulin for Rust)

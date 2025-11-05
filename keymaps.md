@@ -220,6 +220,29 @@ Commands:
 
 ---
 
+## Quickfix Navigation
+
+| Keymap | Mode | Description |
+|--------|------|-------------|
+| `]q` | Normal | Next quickfix item |
+| `[q` | Normal | Previous quickfix item |
+| `]Q` | Normal | Last quickfix item |
+| `[Q` | Normal | First quickfix item |
+
+---
+
+## Window Management
+
+| Keymap | Mode | Description |
+|--------|------|-------------|
+| `<leader>wv` | Normal | Split window vertically |
+| `<leader>wh` | Normal | Split window horizontally |
+| `<leader>we` | Normal | Equalize window sizes |
+| `<leader>wm` | Normal | Maximize current window (close others) |
+| `<leader>wq` | Normal | Close current window |
+
+---
+
 ## Key Prefix Groups
 
 - `<leader>c` - **[C]ode** actions and operations
