@@ -47,6 +47,7 @@ require('custom-plugins.markdown-runner').setup()
 
 local plugins = {
   { import = 'common-plugins' },
+  { 'mhinz/vim-signify' },
   { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
   { -- Add indentation guides even on blank lines
     'lukas-reineke/indent-blankline.nvim',
