@@ -30,10 +30,6 @@ require 'pdftex'
 require 'file-detector'
 require 'buffer-cleanup'
 
-vim.keymap.set('n', '<leader>fe', function()
-  require('file-picker').open()
-end, { desc = 'Open custom file picker' })
-
 -- [[ Configure and install plugins ]]
 --
 --  To check the current status of your plugins, run
