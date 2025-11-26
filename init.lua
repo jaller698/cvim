@@ -53,7 +53,6 @@ local plugins = {
     event = 'VimEnter',
     opts = {},
   },
-  { 'simrat39/symbols-outline.nvim', opts = {}, cmd = { 'SymbolsOutline', 'SymbolsOutlineOpen' } },
   {
     'IstiCusi/docpair.nvim',
     main = 'docpair',
