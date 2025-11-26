@@ -26,10 +26,11 @@ return {
       lualine_a = { 'mode' },
       lualine_b = { 'branch', 'diff', 'diagnostics' },
       lualine_c = { 'filename' },
-      lualine_x = { 'encoding', 'fileformat', 'filetype' },
-      lualine_y = { 'lsp_status' },
-      lualine_z = { 'location', 'progress' },
+      lualine_x = { 'lsp_status', 'fileformat', 'filetype' },
+      lualine_y = { 'progress' },
+      lualine_z = { 'location' },
     },
+    -- Inactive in this context means windows not currently in focus...
     inactive_sections = {
       lualine_a = {},
       lualine_b = {},

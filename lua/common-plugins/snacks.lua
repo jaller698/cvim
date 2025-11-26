@@ -51,7 +51,13 @@ return {
     {
       '<leader>fw',
       function()
-        Snacks.picker.grep()
+        Snacks.picker.grep {
+          exclude = {
+            '.git',
+            'deps',
+            '*build',
+          },
+        }
       end,
       desc = 'Find files by grep',
     },
@@ -149,13 +155,6 @@ return {
         Snacks.picker.grep_buffers()
       end,
       desc = 'Grep Open Buffers',
-    },
-    {
-      '<leader>sw',
-      function()
-        Snacks.picker.grep()
-      end,
-      desc = 'Grep',
     },
     {
       '<leader>s/',
