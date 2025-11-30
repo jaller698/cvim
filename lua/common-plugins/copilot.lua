@@ -47,6 +47,7 @@ return {
   },
   {
     'olimorris/codecompanion.nvim',
+    version = 'v17.30.0',
     cmd = { 'CodeCompanion', 'CodeCompanionChat' },
     opts = {
       strategies = {
