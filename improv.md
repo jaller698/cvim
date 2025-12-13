@@ -39,7 +39,7 @@ This document outlines 30 high-impact improvements for this Neovim configuration
 
 ## Workflow Efficiency
 
-- [ ] **7. Add project-local configuration support**
+- ❌ ~**7. Add project-local configuration support**~
   - Implement `.nvim.lua` or `.nvimrc` loading in project root with security checks
   - Allow per-project LSP, formatting, and linting overrides
   - Document the configuration format and security considerations
