@@ -53,21 +53,21 @@ local plugins = {
     event = 'VimEnter',
     opts = {},
   },
-  {
-    'IstiCusi/docpair.nvim',
-    main = 'docpair',
-    lazy = false, -- eager so :Documented has filename completion immediately
-    opts = { info_filetype = 'markdown' },
-    cmd = { 'Documented', 'DocpairToggle' },
-    config = true,
-  },
-  {
-    'bngarren/checkmate.nvim',
-    ft = 'markdown', -- Lazy loads for Markdown files matching patterns in 'files'
-    opts = {
-      files = { '**_info', '**.md' },
-    },
-  },
+  -- {
+  --   'IstiCusi/docpair.nvim',
+  --   main = 'docpair',
+  --   lazy = false, -- eager so :Documented has filename completion immediately
+  --   opts = { info_filetype = 'markdown' },
+  --   cmd = { 'Documented', 'DocpairToggle' },
+  --   config = true,
+  -- },
+  -- {
+  --   'bngarren/checkmate.nvim',
+  --   ft = 'markdown', -- Lazy loads for Markdown files matching patterns in 'files'
+  --   opts = {
+  --     files = { '**_info', '**.md' },
+  --   },
+  -- },
   {
     'lambdalisue/vim-suda',
     opts = {},
@@ -101,10 +101,6 @@ local plugins = {
 }
 if get_git_repo_name() == 'dci' then
   vim.list_extend(plugins, require 'dci')
-end
-
-if vim.fn.has 'win32' == 0 then
-  vim.list_extend(plugins, { 'seandewar/actually-doom.nvim', opts = {} })
 end
 
 -- NOTE: Here is where you install your plugins.

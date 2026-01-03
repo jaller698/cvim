@@ -1,3 +1,5 @@
+-- I', not really a fan of having a full blown config just for scala, but it might become useful later.
+
 return {
   'scalameta/nvim-metals',
   event = 'LspAttach',
