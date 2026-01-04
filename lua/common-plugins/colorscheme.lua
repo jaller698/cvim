@@ -34,4 +34,9 @@ return {
       require('tokyodark').setup(opts) -- calling setup is optional
     end,
   },
+  {
+    'uhs-robert/oasis.nvim',
+    lazy = false,
+    priority = 1000,
+  },
 }

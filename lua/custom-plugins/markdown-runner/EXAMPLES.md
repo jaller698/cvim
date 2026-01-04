@@ -99,5 +99,15 @@ func main() {
 >> Return code: 0
 ```
 
-This text should not be removed
+```scala
+object Hello {
+    def main(args: Array[String]): Unit = {
+        println("Hello world from scala!")
+    }
+}
+```
+```fish
+>> Hello world from scala!
+```
 
+This text should not be removed

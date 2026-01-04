@@ -1,0 +1,1 @@
+return { 'ethanuppal/spade.nvim' }

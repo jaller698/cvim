@@ -91,6 +91,7 @@ vim.api.nvim_create_autocmd('FileType', {
     vim.api.nvim_buf_create_user_command(0, 'BuildPDF', function()
       local cmd = {
         'latexmk',
+        '-f',
         '-xelatex',
         '-interaction=nonstopmode',
         '-jobname=' .. foldername,

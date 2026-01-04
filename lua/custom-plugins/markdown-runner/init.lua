@@ -271,6 +271,32 @@ local function run_dart_code(code_block, callback)
   end)
 end
 
+function run_scala_code(code_block, callback)
+  -- Write code to a temporary Scala file and run it with scala-cli
+  local tmpfile = vim.fn.tempname() .. '.sc'
+  local file = io.open(tmpfile, 'w')
+  if not file then
+    callback 'Error: Unable to create temporary Scala file.'
+    return
+  end
+  file:write(table.concat(code_block, '\n'))
+  file:close()
+
+  vim.system({ 'scala', tmpfile }, {}, function(result)
+    local output = ''
+    if result.code ~= 0 then
+      output = 'Error executing Scala code: ' .. (result.stderr or '')
+    elseif result.stdout and result.stdout ~= '' then
+      output = result.stdout
+    else
+      output = 'No output from Scala code.'
+    end
+    -- Clean up the temporary file
+    os.remove(tmpfile)
+    callback(output)
+  end)
+end
+
 function M.run_block()
   -- 1. Detect current code block
   -- 2. Extract language and code
@@ -377,6 +403,8 @@ function M.run_block()
     run_elixir_code(code_block, insert_output)
   elseif language == 'dart' then
     run_dart_code(code_block, insert_output)
+  elseif language == 'scala' or language == 'chisel' then
+    run_scala_code(code_block, insert_output)
   else
     print('Unsupported language: ' .. language)
     return
