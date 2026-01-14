@@ -56,6 +56,7 @@ return {
             '.git',
             'deps',
             '*build',
+            '.lexical',
           },
         }
       end,
