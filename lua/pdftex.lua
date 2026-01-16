@@ -89,13 +89,18 @@ vim.api.nvim_create_autocmd('FileType', {
     end, {})
 
     vim.api.nvim_buf_create_user_command(0, 'BuildPDF', function()
+      local foldername = vim.fn.fnamemodify(vim.fn.getcwd(), ':t')
+
       local cmd = {
-        'latexmk',
-        '-f',
-        '-xelatex',
-        '-interaction=nonstopmode',
+        'podman',
+        'run',
+        '--rm',
+        '-v',
+        vim.fn.getcwd() .. ':/work:z',
+        '-w',
+        '/work',
+        'ghcr.io/jaller698/latex:latest',
         '-jobname=' .. foldername,
-        './main.tex',
       }
 
       local open_cmd = {
@@ -103,7 +108,7 @@ vim.api.nvim_create_autocmd('FileType', {
         './' .. foldername .. '.pdf',
       }
 
-      print '🚀 Starting LaTeX build...'
+      print '🚀 Starting LaTeX build (containerized)...'
       vim.system(cmd, { text = true }, function(result)
         if result.code == 0 then
           vim.schedule(function()
@@ -118,7 +123,7 @@ vim.api.nvim_create_autocmd('FileType', {
           end)
         end
       end)
-    end, { desc = 'Build LaTeX document with folder name and open PDF' })
+    end, { desc = 'Build LaTeX document in container and open PDF' })
 
     vim.keymap.set('n', '<leader>dp', '<cmd>BuildPDF<CR>', { buffer = true, desc = 'Build and view PDF' })
     vim.keymap.set('n', '<leader>df', '<cmd>InsertFigure<CR>', { buffer = true, desc = 'Insert LaTeX Figure' })
