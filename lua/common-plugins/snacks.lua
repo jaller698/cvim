@@ -1,6 +1,5 @@
 return {
   'folke/snacks.nvim',
-  event = 'VeryLazy',
   priority = 1000,
   lazy = false,
   opts = {
@@ -18,6 +17,7 @@ return {
     statuscolumn = { enabled = true },
     scratch = { enabled = true },
     words = { enabled = true },
+    toggle = { enabled = true },
     styles = {
       notification = {
         -- Uncomment and adjust if you need to wrap notifications:
