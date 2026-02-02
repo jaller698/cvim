@@ -23,20 +23,20 @@ return { -- Highlight, edit, and navigate code
   --    - Incremental selection: Included, see `:help nvim-treesitter-incremental-selection-mod`
   --    - Show your current context: https://github.com/nvim-treesitter/nvim-treesitter-context
   --    - Treesitter + textobjects: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
-  config = function()
-    local parser_config = require('nvim-treesitter.parsers').get_parser_configs()
-    require('nvim-treesitter.install').prefer_git = true
-
-    parser_config.spade = {
-      install_info = {
-        url = 'https://gitlab.com/spade-lang/tree-sitter-spade/', -- local path or git repo
-        files = { 'src/parser.c' },
-        -- optional entries:
-        branch = 'main', -- default branch in case of git repo if different from master
-        generate_requires_npm = false, -- if stand-alone parser without npm dependencies
-        requires_generate_from_grammar = false, -- if folder contains pre-generated src/parser.c
-      },
-      filetype = 'spade', -- if filetype does not match the parser name
-    }
-  end,
+  -- config = function()
+  --   local parser_config = require('nvim-treesitter.parsers').get_parser_configs()
+  --   require('nvim-treesitter.install').prefer_git = true
+  --
+  --   parser_config.spade = {
+  --     install_info = {
+  --       url = 'https://gitlab.com/spade-lang/tree-sitter-spade/', -- local path or git repo
+  --       files = { 'src/parser.c' },
+  --       -- optional entries:
+  --       branch = 'main', -- default branch in case of git repo if different from master
+  --       generate_requires_npm = false, -- if stand-alone parser without npm dependencies
+  --       requires_generate_from_grammar = false, -- if folder contains pre-generated src/parser.c
+  --     },
+  --     filetype = 'spade', -- if filetype does not match the parser name
+  --   }
+  -- end,
 }

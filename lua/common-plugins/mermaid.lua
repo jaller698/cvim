@@ -1,7 +1,10 @@
 return {
   '3rd/diagram.nvim',
+  cond = function()
+    return not vim.g.neovide -- image.nvim does not work in neovide, and this is a dependency of diagram.nvim
+  end,
   dependencies = {
-    { '3rd/image.nvim', opts = {} }, -- you'd probably want to configure image.nvim manually instead of doing this
+    { '3rd/image.nvim' }, -- you'd probably want to configure image.nvim manually instead of doing this
   },
   opts = { -- you can just pass {}, defaults below
     events = {

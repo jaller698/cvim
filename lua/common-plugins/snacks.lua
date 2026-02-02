@@ -35,6 +35,13 @@ return {
       desc = 'Buffers',
     },
     {
+      '<leader>fB',
+      function()
+        Snacks.picker.grep_buffers()
+      end,
+      desc = 'Grep in buffers',
+    },
+    {
       '<leader>fc',
       function()
         Snacks.picker.files { cwd = vim.fn.stdpath 'config' }
