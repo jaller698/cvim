@@ -1,48 +1,30 @@
 return {
   {
-    'github/copilot.vim',
+    'zbirenbaum/copilot.lua',
     event = 'InsertEnter',
-    config = function(_, opts)
-      -- Set the copilot config options here
-      --  Setup the copilot to complete using C-a
-      vim.g.copilot_no_tab_map = true
-      -- Accept suggestion
-      vim.keymap.set('i', '<C-a>', 'copilot#Accept("\\<CR>")', {
-        expr = true,
-        replace_keycodes = false,
-        desc = 'Copilot Accept',
-      })
-      -- Dismiss suggestion
-      vim.keymap.set('i', '<C-x>', 'copilot#Dismiss()', {
-        expr = true,
-        replace_keycodes = false,
-        desc = 'Copilot Dismiss',
-      })
-      -- Next suggestion
-      vim.keymap.set('i', '<C-j>', 'copilot#Next()', {
-        expr = true,
-        replace_keycodes = false,
-        desc = 'Copilot Next',
-      })
-      -- Previous suggestion
-      vim.keymap.set('i', '<C-k>', 'copilot#Previous()', {
-        expr = true,
-        replace_keycodes = false,
-        desc = 'Copilot Previous',
-      })
-      -- Next word in suggestion
-      vim.keymap.set('i', '<C-l>', 'copilot#NextWord()', {
-        expr = true,
-        replace_keycodes = false,
-        desc = 'Copilot Next Word',
-      })
-      -- Previous word in suggestion
-      vim.keymap.set('i', '<C-h>', 'copilot#PreviousWord()', {
-        expr = true,
-        replace_keycodes = false,
-        desc = 'Copilot Previous Word',
-      })
-      vim.g.copilot_workspace_folders = '~/code/dci/'
+    config = function()
+      require('copilot').setup {
+        suggestion = {
+          auto_trigger = true,
+          keymap = {
+            accept = '<C-a>',
+            dismiss = '<C-x>',
+            next = '<C-j>',
+            prev = '<C-k>',
+            accept_word = '<C-e>',
+          },
+        },
+        panel = {
+          enabled = true,
+          auto_refresh = true,
+        },
+        filetypes = {
+          markdown = true,
+          help = true,
+        },
+        copilot_node_command = 'node', -- adjust if needed
+        server_opts_overrides = {},
+      }
     end,
   },
   {

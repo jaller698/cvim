@@ -29,6 +29,7 @@ require 'keymaps'
 require 'pdftex'
 require 'file-detector'
 require 'buffer-cleanup'
+require 'esp-setup'
 
 -- [[ Configure and install plugins ]]
 --
