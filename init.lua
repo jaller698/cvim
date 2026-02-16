@@ -45,7 +45,28 @@ require('custom-plugins.markdown-runner').setup()
 local plugins = {
   { import = 'common-plugins' },
   { 'mhinz/vim-signify' },
-  { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
+  {
+    'folke/todo-comments.nvim',
+    event = 'VimEnter',
+    dependencies = { 'nvim-lua/plenary.nvim' },
+    opts = {
+      signs = true,
+      highlight = {
+        pattern = [[.*<(KEYWORDS).*:]],
+      },
+      search = {
+        command = 'rg',
+        args = {
+          '--color=never',
+          '--no-heading',
+          '--with-filename',
+          '--line-number',
+          '--column',
+        },
+        pattern = [[\b(KEYWORDS)(?:\s*\([^)]+\))?:]],
+      },
+    },
+  },
   { -- Add indentation guides even on blank lines
     'lukas-reineke/indent-blankline.nvim',
     -- Enable `lukas-reineke/indent-blankline.nvim`
