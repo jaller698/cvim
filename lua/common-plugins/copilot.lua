@@ -1,6 +1,7 @@
 return {
   {
     'zbirenbaum/copilot.lua',
+    enabled = os.getenv 'NVIM_PROFILE' ~= 'work',
     event = 'InsertEnter',
     config = function()
       require('copilot').setup {
@@ -31,6 +32,7 @@ return {
     'olimorris/codecompanion.nvim',
     version = 'v17.30.0',
     cmd = { 'CodeCompanion', 'CodeCompanionChat' },
+    enabled = os.getenv 'NVIM_PROFILE' ~= 'work',
     opts = {
       strategies = {
         chat = {

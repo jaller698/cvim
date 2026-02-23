@@ -121,8 +121,13 @@ local plugins = {
     },
   },
 }
+-- Load machine specific config
+local profile = os.getenv 'NVIM_PROFILE'
 if get_git_repo_name() == 'dci' then
   vim.list_extend(plugins, require 'dci')
+end
+if profile == 'work' then
+  vim.list_extend(plugins, require 'alcensoft')
 end
 
 -- NOTE: Here is where you install your plugins.
