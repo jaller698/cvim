@@ -61,6 +61,7 @@ return {
         Snacks.picker.grep {
           exclude = {
             '.git',
+            '.svn',
             'deps',
             '*build',
             '.lexical',
