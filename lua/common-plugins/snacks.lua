@@ -30,9 +30,18 @@ return {
     {
       '<leader>fb',
       function()
-        Snacks.picker.buffers()
+        Snacks.picker.buffers {
+          win = {
+            input = {
+              keys = {
+                ['<C-x>'] = { 'bufdelete', mode = { 'i', 'n' } },
+                ['dd'] = { 'bufdelete', mode = { 'n' } },
+              },
+            },
+          },
+        }
       end,
-      desc = 'Buffers',
+      desc = 'Buffers (dd to delete)',
     },
     {
       '<leader>fB',
