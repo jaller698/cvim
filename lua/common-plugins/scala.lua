@@ -1,8 +1,9 @@
--- I', not really a fan of having a full blown config just for scala, but it might become useful later.
+-- I'm not really a fan of having a full blown config just for scala, but it might become useful later.
 
 return {
   'scalameta/nvim-metals',
   event = 'LspAttach',
+  enabled = false,
   ft = { 'scala', 'sbt', 'java' },
   opts = function()
     local metals_config = require('metals').bare_config()
