@@ -74,7 +74,7 @@ return {
       end,
       desc = 'ESP32: Clean',
     },
-    { '<leader>Rr', ':ESPReconfigure<CR>', desc = 'ESP32: Reconfigure project' },
-    { '<leader>Ri', ':ESPInfo<CR>', desc = 'ESP32: Project Info' },
+    { '<leader>Er', ':ESPReconfigure<CR>', desc = 'ESP32: Reconfigure project' },
+    { '<leader>Ei', ':ESPInfo<CR>', desc = 'ESP32: Project Info' },
   },
 }
