@@ -12,14 +12,17 @@ return {
           comments = { italic = false }, -- Disable italics in comments
         },
       }
-
-      -- Load the colorscheme here.
-      -- Like many other themes, this one has different styles, and you could load
-      -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-      vim.cmd.colorscheme 'oasis-lagoon'
     end,
   },
-  { 'sainnhe/everforest' },
+  {
+    'sainnhe/everforest',
+
+    -- Load the colorscheme here.
+    config = function()
+      vim.g.everforest_background = 'medium' -- Set the background style to 'medium' choose between 'hard', 'medium' or 'soft'
+      vim.cmd.colorscheme 'everforest'
+    end,
+  },
   { 'protesilaos/tempus-themes-vim' },
   { 'catppuccin/nvim', name = 'catppuccin', priority = 1000 },
   { 'kepano/flexoki-neovim', name = 'flexoki' },

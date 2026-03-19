@@ -5,10 +5,4 @@ return {
   {
     'juneedahamed/svnj.vim',
   },
-  {
-    'sainnhe/everforest',
-    config = function()
-      vim.cmd.colorscheme 'everforest'
-    end,
-  },
 }
