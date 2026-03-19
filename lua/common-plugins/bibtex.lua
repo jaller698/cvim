@@ -1,11 +1,5 @@
 return {
   {
-    'folke/snacks.nvim',
-    opts = {
-      picker = {}, -- enable the picker module
-    },
-  },
-  {
     'krissen/snacks-bibtex.nvim',
     dependencies = { 'folke/snacks.nvim' },
     opts = {
