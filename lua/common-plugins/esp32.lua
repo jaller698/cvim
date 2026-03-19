@@ -49,16 +49,16 @@ return {
     {
       '<leader>EF',
       function()
-        require('esp32').pick 'flash'
+        require('esp32').pick 'flash monitor'
       end,
       desc = 'ESP32: Pick & Flash',
     },
     {
       '<leader>Ef',
       function()
-        require('esp32').command 'flash'
+        require('esp32').pick 'flash monitor'
       end,
-      desc = 'ESP32: Flash',
+      desc = 'ESP32: Flash without monitoring',
     },
     {
       '<leader>Ec',
