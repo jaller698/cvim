@@ -12,10 +12,6 @@ return {
 
     -- Useful status updates for LSP.
     { 'j-hui/fidget.nvim', opts = {}, event = 'LspAttach' },
-
-    -- Allows extra capabilities provided by nvim-cmp
-    'hrsh7th/nvim-cmp',
-    'hrsh7th/cmp-nvim-lsp',
   },
   config = function()
     -- Brief aside: **What is LSP?**
