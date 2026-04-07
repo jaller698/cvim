@@ -171,11 +171,6 @@ return {
       -- But for many setups, the LSP (`ts_ls`) will work just fine
       -- ts_ls = {},
       --
-      fsautocomplete = {
-        on_attach = function(client, bufnr)
-          client.server_capabilities.semanticTokensProvider = nil
-        end,
-      },
 
       lua_ls = {
         -- cmd = { ... },

@@ -1,21 +1,43 @@
-return { -- Highlight, edit, and navigate code
+return {
   'nvim-treesitter/nvim-treesitter',
-  event = { 'BufReadPost', 'BufNewFile' }, -- Load on file read or new file
+  event = { 'BufReadPost', 'BufNewFile' },
   build = ':TSUpdate',
   lazy = false,
   opts = {
-    ensure_installed = { 'bash', 'c', 'cpp', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc', 'latex' },
-    -- Autoinstall languages that are not installed
-    auto_install = true,
-    highlight = {
-      enable = true,
-      -- Some languages depend on vim's regex highlighting system (such as Ruby) for indent rules.
-      --  If you are experiencing weird indenting issues, add the language to
-      --  the list of additional_vim_regex_highlighting and disabled languages for indent.
-      additional_vim_regex_highlighting = { 'ruby' },
+    ensure_installed = {
+      'bash',
+      'c',
+      'cpp',
+      'diff',
+      'html',
+      'lua',
+      'luadoc',
+      'markdown',
+      'markdown_inline',
+      'query',
+      'vim',
+      'vimdoc',
+      'latex',
+      'elixir',
     },
-    indent = { enable = true, disable = { 'ruby' } },
+    auto_install = true,
+    highlight = { enable = true },
+    indent = { enable = true },
   },
+  config = function(_, opts)
+    require('nvim-treesitter.configs').setup(opts)
+
+    local group = vim.api.nvim_create_augroup('AlwaysStartTreesitter', { clear = true })
+
+    vim.api.nvim_create_autocmd('FileType', {
+      group = group,
+      pattern = '*',
+      callback = function(ev)
+        -- avoid errors on special buffers / filetypes with no parser
+        pcall(vim.treesitter.start, ev.buf)
+      end,
+    })
+  end,
   -- There are additional nvim-treesitter modules that you can use to interact
   -- with nvim-treesitter. You should go explore a few and see what interests you:
   --
