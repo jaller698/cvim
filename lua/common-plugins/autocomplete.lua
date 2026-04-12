@@ -2,6 +2,9 @@ return {
   'saghen/blink.cmp',
   version = '1.*',
   opts = {
+    cmdline = {
+      enabled = false,
+    },
     keymap = {
       -- set to 'none' to disable the 'default' preset
       preset = 'default',
@@ -10,8 +13,11 @@ return {
       ['<Down>'] = { 'select_next', 'fallback' },
 
       -- Accept currently selected item.
-      ['<C-E>'] = { 'accept', 'fallback' },
+      ['<C-Y>'] = { 'accept', 'fallback' },
       ['<CR>'] = { 'accept', 'fallback' },
+
+      ['<Tab>'] = { 'select_next', 'fallback' },
+      ['<S-Tab>'] = { 'select_prev', 'fallback' },
 
       -- Force the completion menu to show, even if there is only one match
       -- ['<C-Space>'] = { 'complete' },
@@ -26,6 +32,8 @@ return {
     sources = {
       default = { 'lsp', 'path', 'snippets', 'buffer' },
     },
-    completion = { documentation = { auto_show = true } },
+    completion = {
+      documentation = { auto_show = true },
+    },
   },
 }

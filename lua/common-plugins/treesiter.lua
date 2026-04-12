@@ -25,7 +25,8 @@ return {
     indent = { enable = true },
   },
   config = function(_, opts)
-    require('nvim-treesitter.configs').setup(opts)
+    -- Redundant in neovim 0.12
+    -- require('nvim-treesitter.configs').setup(opts)
 
     local group = vim.api.nvim_create_augroup('AlwaysStartTreesitter', { clear = true })
 

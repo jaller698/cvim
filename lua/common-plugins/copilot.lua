@@ -30,7 +30,7 @@ return {
   },
   {
     'olimorris/codecompanion.nvim',
-    version = 'v17.30.0',
+    version = 'v19.11.0',
     cmd = { 'CodeCompanion', 'CodeCompanionChat' },
     enabled = os.getenv 'NVIM_PROFILE' ~= 'work',
     opts = {
