@@ -5,20 +5,7 @@ return {
   lazy = false,
   opts = {
     ensure_installed = {
-      'bash',
-      'c',
-      'cpp',
-      'diff',
-      'html',
-      'lua',
-      'luadoc',
-      'markdown',
-      'markdown_inline',
-      'query',
-      'vim',
-      'vimdoc',
-      'latex',
-      'elixir',
+      'all',
     },
     auto_install = true,
     highlight = { enable = true },
@@ -33,9 +20,11 @@ return {
     vim.api.nvim_create_autocmd('FileType', {
       group = group,
       pattern = '*',
-      callback = function(ev)
-        -- avoid errors on special buffers / filetypes with no parser
-        pcall(vim.treesitter.start, ev.buf)
+      callback = function(args)
+        local lang = vim.treesitter.language.get_lang(args.match)
+        if lang and vim.treesitter.language.add(lang) then
+          vim.treesitter.start()
+        end
       end,
     })
   end,

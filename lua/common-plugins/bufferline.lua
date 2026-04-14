@@ -44,8 +44,12 @@ return {
 
     -- 'æ' moves the buffer left (previous position)
     vim.keymap.set('n', 'æ', '<cmd>BufferLineCyclePrev<CR>', { desc = 'Move buffer left' })
+    -- 'Æ' moves to the tab left (previous position)
+    vim.keymap.set('n', 'Æ', '<cmd>tabprevious<CR>', { desc = 'Move tab left' })
     -- 'ø' moves the buffer right (next position)
     vim.keymap.set('n', 'ø', '<cmd>BufferLineCycleNext<CR>', { desc = 'Move buffer right' })
+    -- 'Ø' moves the tab right (next position)
+    vim.keymap.set('n', 'Ø', '<cmd>tabnext<CR>', { desc = 'Move tab right' })
     -- Additional key mappings for buffer management:
     vim.keymap.set('n', '<leader>bq', '<cmd>bdelete<CR>', { desc = 'Quit window' })
     vim.keymap.set('n', '<leader>b|', '<cmd>vsplit | b#<CR>', { desc = 'Open last buffer in a vertical split' })

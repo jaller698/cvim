@@ -3,6 +3,6 @@ require 'watchman'
 
 return {
   {
-    'juneedahamed/svnj.vim',
+    'juneedahamed/vc.vim',
   },
 }
