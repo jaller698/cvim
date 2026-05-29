@@ -29,8 +29,48 @@ return {
     end,
   },
   {
+    'milanglacier/minuet-ai.nvim',
+    enabled = os.getenv 'NVIM_PROFILE' == 'work',
+    event = 'InsertEnter',
+    config = function()
+      require('minuet').setup {
+        -- Set LM Studio as the provider
+        provider = 'openai_fim_compatible',
+        n_completions = 1,
+        context_window = 512,
+
+        provider_options = {
+          openai_fim_compatible = {
+            api_key = 'NVIM_PROFILE',
+            name = 'LM Studio',
+            end_point = 'http://localhost:65533/v1/completions',
+            model = 'google/gemma-4-e2b',
+            optional = {
+              max_tokens = 256,
+              top_p = 0.9,
+            },
+          },
+        },
+
+        virtualtext = {
+          -- Replaces auto_trigger = true & your filetypes table
+          -- '*' means all filetypes, but you can restrict it to {'markdown', 'help'} if you prefer
+          auto_trigger_ft = { '*' },
+          auto_trigger_ignore_ft = {},
+
+          keymap = {
+            accept = '<C-a>',
+            dismiss = '<C-x>',
+            next = '<C-j>',
+            prev = '<C-k>',
+            accept_line = '<C-e>',
+          },
+        },
+      }
+    end,
+  },
+  {
     'olimorris/codecompanion.nvim',
-    version = 'v19.11.0',
     cmd = { 'CodeCompanion', 'CodeCompanionChat' },
     enabled = os.getenv 'NVIM_PROFILE' ~= 'work',
     opts = {

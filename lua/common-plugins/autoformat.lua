@@ -92,10 +92,29 @@ return { -- Autoformat
     {
       '<leader>bf',
       function()
-        require('conform').format { async = true, lsp_format = 'fallback' }
+        local mode = vim.api.nvim_get_mode().mode
+        local is_visual = mode:match '^[vV\22]' -- Matches v, V, or Ctrl-V
+
+        if is_visual then
+          vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<Esc>', true, false, true), 'n', true)
+
+          vim.schedule(function()
+            vim.cmd [['<,'>s/\s\+$//e]]
+
+            require('conform').format { async = true, lsp_format = 'fallback' }
+          end)
+        else
+          local save_cursor = vim.fn.getpos '.'
+          vim.cmd [[%s/\s\+$//e]]
+          vim.fn.setpos('.', save_cursor)
+
+          remove_extra_trailing_newlines()
+
+          require('conform').format { async = true, lsp_format = 'fallback' }
+        end
       end,
-      mode = '',
-      desc = '[B]uffer [F]ormat',
+      mode = { 'n', 'v' },
+      desc = '[B]uffer or Range [F]ormat & Clean',
     },
   },
   opts = {

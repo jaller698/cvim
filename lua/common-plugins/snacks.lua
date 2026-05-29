@@ -352,7 +352,13 @@ return {
       end,
       desc = 'Goto T[y]pe Definition',
     },
-
+    {
+      'go',
+      function()
+        vim.lsp.buf.hover()
+      end,
+      desc = 'Hover Documentation',
+    },
     -- Other & Toggles
     {
       '<leader>bd',
