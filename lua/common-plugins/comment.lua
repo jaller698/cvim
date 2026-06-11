@@ -1,5 +1,5 @@
 return {
-  'numToStr/Comment.nvim',
+  'jaller698/Comment.nvim',
   lazy = false,
   event = 'VeryLazy',
   config = function()
