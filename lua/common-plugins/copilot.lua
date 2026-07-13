@@ -72,73 +72,83 @@ return {
   {
     'olimorris/codecompanion.nvim',
     cmd = { 'CodeCompanion', 'CodeCompanionChat' },
-    enabled = os.getenv 'NVIM_PROFILE' ~= 'work',
-    opts = {
-      strategies = {
-        chat = {
-          variables = {
-            ['git_diff'] = {
-              callback = function()
-                return vim.fn.system 'git diff --cached origin/master'
-              end,
-              description = 'Git Diff',
-              opts = {
-                contains_code = true,
-              },
-            },
-          },
-        },
-      },
-      display = {
-        action_palette = {
-          width = 95,
-          height = 10,
-          prompt = 'Prompt ', -- Prompt used for interactive LLM calls
-          provider = providers and providers.action_palette or 'default', -- telescope|mini_pick|snacks|default
-          opts = {
-            show_default_actions = true, -- Show the default actions in the action palette?
-            show_default_prompt_library = true, -- Show the default prompt library in the action palette?
-          },
-        },
-        chat = {
-          icons = {
-            buffer_pin = ' ',
-            buffer_watch = '󰂥 ',
-          },
-          debug_window = {
-            ---@return number|fun(): number
-            width = vim.o.columns - 5,
-            ---@return number|fun(): number
-            height = vim.o.lines - 2,
-          },
-          window = {
-            layout = 'vertical', -- float|vertical|horizontal|buffer
-            position = nil, -- left|right|top|bottom (nil will default depending on vim.opt.splitright|vim.opt.splitbelow)
-            border = 'single',
-            height = 0.8,
-            ---@type number|"auto" using "auto" will allow full_height buffers to act like normal buffers
-            width = 0.30,
-            relative = 'editor',
-            full_height = true,
-            opts = {
-              breakindent = true,
-              cursorcolumn = false,
-              cursorline = false,
-              foldcolumn = '0',
-              linebreak = true,
-              list = false,
-              numberwidth = 1,
-              signcolumn = 'no',
-              spell = false,
-              wrap = true,
-            },
-          },
-        },
-      },
-    },
     dependencies = {
       'nvim-lua/plenary.nvim',
       'nvim-treesitter/nvim-treesitter',
     },
+    opts = function()
+      local is_work = os.getenv 'NVIM_PROFILE' == 'work'
+      local active_adapter = is_work and 'lmstudio' or 'copilot'
+
+      return {
+        adapters = {
+          http = {
+            lmstudio = function()
+              return require('codecompanion.adapters').extend('openai_compatible', {
+                env = {
+                  url = 'http://127.0.0.1:65533',
+                  chat_url = '/v1/chat/completions',
+                  api_key = 'lm-studio',
+                },
+              })
+            end,
+          },
+        },
+        strategies = {
+          chat = {
+            adapter = active_adapter,
+          },
+          inline = {
+            adapter = active_adapter,
+          },
+          agent = {
+            adapter = active_adapter,
+          },
+        },
+        display = {
+          action_palette = {
+            width = 95,
+            height = 10,
+            prompt = 'Prompt ',
+            provider = 'default',
+            opts = {
+              show_default_actions = true,
+              show_default_prompt_library = true,
+            },
+          },
+          chat = {
+            icons = {
+              buffer_pin = ' ',
+              buffer_watch = '󰂥 ',
+            },
+            debug_window = {
+              width = vim.o.columns - 5,
+              height = vim.o.lines - 2,
+            },
+            window = {
+              layout = 'vertical',
+              position = nil,
+              border = 'single',
+              height = 0.8,
+              width = 0.30,
+              relative = 'editor',
+              full_height = true,
+              opts = {
+                breakindent = true,
+                cursorcolumn = false,
+                cursorline = false,
+                foldcolumn = '0',
+                linebreak = true,
+                list = false,
+                numberwidth = 1,
+                signcolumn = 'no',
+                spell = false,
+                wrap = true,
+              },
+            },
+          },
+        },
+      }
+    end,
   },
 }
