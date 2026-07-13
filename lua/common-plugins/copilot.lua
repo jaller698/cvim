@@ -100,14 +100,6 @@ return {
             show_default_prompt_library = true, -- Show the default prompt library in the action palette?
           },
         },
-        strategies = {
-          chat = {
-            adapter = 'gemini',
-          },
-          inline = {
-            adapter = 'gemini',
-          },
-        },
         chat = {
           icons = {
             buffer_pin = ' ',
