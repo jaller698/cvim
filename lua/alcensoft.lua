@@ -98,6 +98,50 @@ end, { desc = 'Show SVN commit comment for the current line' })
 
 vim.keymap.set('n', '<leader>cb', ':SvnBlameLine<CR>', { noremap = true, silent = true, desc = 'See SVN blame on current line' })
 
+vim.api.nvim_create_user_command('SvnDiff', function()
+  local file = vim.fn.expand '%:p'
+  if file == '' then
+    print 'No file in current buffer'
+    return
+  end
+
+  local ft = vim.bo.filetype
+  local cur_win = vim.api.nvim_get_current_win()
+
+  -- Turn on diff mode for the current working file
+  vim.cmd 'diffthis'
+
+  -- Fetch the SVN HEAD contents
+  local cmd = string.format('svn cat -r HEAD %s', vim.fn.shellescape(file))
+  local output = vim.fn.systemlist(cmd)
+
+  if vim.v.shell_error ~= 0 then
+    print 'Error fetching SVN file or file not tracked.'
+    vim.cmd 'diffoff'
+    return
+  end
+
+  -- Create a vertical split
+  vim.cmd 'vnew'
+  local scratch_buf = vim.api.nvim_get_current_buf()
+
+  -- Populate the new buffer with the SVN output
+  vim.api.nvim_buf_set_lines(scratch_buf, 0, -1, false, output)
+
+  -- Configure the buffer as a temporary, read-only scratchpad
+  vim.bo[scratch_buf].buftype = 'nofile'
+  vim.bo[scratch_buf].bufhidden = 'wipe'
+  vim.bo[scratch_buf].swapfile = false
+  vim.bo[scratch_buf].readonly = true
+  vim.bo[scratch_buf].filetype = ft
+
+  -- Turn on diff mode for the scratch buffer
+  vim.cmd 'diffthis'
+
+  -- Return focus to the original file
+  vim.api.nvim_set_current_win(cur_win)
+end, { desc = 'Compare current file with SVN HEAD' })
+
 return {
   {
     'juneedahamed/vc.vim',
