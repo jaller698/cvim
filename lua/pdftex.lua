@@ -1,3 +1,68 @@
+local function count_tex_words()
+  local bufnr = vim.api.nvim_get_current_buf()
+  local ok, parser = pcall(vim.treesitter.get_parser, bufnr, 'latex')
+  if not ok or not parser then
+    vim.notify('LaTeX Treesitter parser not found', vim.log.levels.ERROR)
+    return
+  end
+
+  local tree = parser:parse()[1]
+  if not tree then
+    return
+  end
+
+  -- List of environments to ignore
+  local excluded_envs = {
+    table = true,
+    tabular = true,
+    tabularx = true,
+    longtable = true,
+    figure = true,
+    ['figure*'] = true,
+    ['table*'] = true,
+  }
+
+  local word_count = 0
+
+  local function traverse(node)
+    local ntype = node:type()
+
+    -- Skip LaTeX comments
+    if ntype == 'comment' then
+      return
+    end
+
+    -- Prune table and figure environments
+    if ntype == 'environment' or ntype == 'generic_environment' then
+      local node_text = vim.treesitter.get_node_text(node, bufnr)
+      local env_name = node_text:match '^\\begin%s*%{([^%}]+)%}'
+      if env_name and excluded_envs[env_name] then
+        return -- Skip traversing this entire sub-tree
+      end
+    end
+
+    -- Count words inside raw text nodes
+    if ntype == 'text' then
+      local text = vim.treesitter.get_node_text(node, bufnr)
+      for _ in text:gmatch "[%w%-']+" do
+        word_count = word_count + 1
+      end
+      return
+    end
+
+    -- Recurse through all child nodes
+    for child in node:iter_children() do
+      traverse(child)
+    end
+  end
+
+  traverse(tree:root())
+  vim.notify('Word count (excl. tables & figures): ' .. word_count, vim.log.levels.INFO)
+end
+
+-- Create the :TexWordCount command
+vim.api.nvim_create_user_command('TexWordCount', count_tex_words, {})
+
 vim.api.nvim_create_autocmd('FileType', {
   pattern = { 'tex', 'latex' },
   callback = function()
@@ -73,6 +138,78 @@ vim.api.nvim_create_autocmd('FileType', {
       M.insert_equation()
     end, {})
 
+    M.insert_latex_table = function(rows, cols)
+      rows = tonumber(rows) or 3
+      cols = tonumber(cols) or 3
+
+      -- Build alignment spec (e.g., "|c|c|c|")
+      local align = '|' .. string.rep('c|', cols)
+
+      local table_snippet = {
+        '\\begin{table}[H]',
+        '    \\centering',
+        '    \\begin{tabular}{' .. align .. '}',
+        '        \\hline',
+      }
+
+      -- Header row
+      local header_cells = {}
+      for c = 1, cols do
+        table.insert(header_cells, 'Header ' .. c)
+      end
+      table.insert(table_snippet, '        ' .. table.concat(header_cells, ' & ') .. ' \\\\')
+      table.insert(table_snippet, '        \\hline')
+
+      -- Data rows
+      for r = 1, rows do
+        local row_cells = {}
+        for c = 1, cols do
+          table.insert(row_cells, string.format('Cell %d,%d', r, c))
+        end
+        table.insert(table_snippet, '        ' .. table.concat(row_cells, ' & ') .. ' \\\\')
+      end
+
+      -- Footer closing
+      table.insert(table_snippet, '        \\hline')
+      table.insert(table_snippet, '    \\end{tabular}')
+      table.insert(table_snippet, '    \\caption{CAPTION}')
+      table.insert(table_snippet, '    \\label{tab:some-table}')
+      table.insert(table_snippet, '\\end{table}')
+
+      local row = vim.api.nvim_win_get_cursor(0)[1]
+      vim.api.nvim_buf_set_lines(0, row, row, false, table_snippet)
+    end
+
+    -- User command supporting argument parsing or UI prompt
+    vim.api.nvim_create_user_command('InsertTable', function(opts)
+      local args = vim.split(vim.trim(opts.args), '%s+')
+      local rows, cols
+
+      if #args == 1 and args[1]:find 'x' then
+        local r, c = args[1]:match '(%d+)x(%d+)'
+        rows, cols = tonumber(r), tonumber(c)
+      elseif #args >= 2 then
+        rows, cols = tonumber(args[1]), tonumber(args[2])
+      end
+
+      -- Prompt user if dimensions weren't provided in the command line
+      if not rows or not cols then
+        vim.ui.input({ prompt = 'Table dimensions (e.g., 5x5 or 5 5): ', default = '3x3' }, function(input)
+          if not input or input == '' then
+            return
+          end
+          local r, c = input:match '(%d+)%s*[x%s]%s*(%d+)'
+          if r and c then
+            M.insert_latex_table(r, c)
+          else
+            vim.notify('Invalid format. Use ROWSxCOLS (e.g. 5x5)', vim.log.levels.ERROR)
+          end
+        end)
+      else
+        M.insert_latex_table(rows, cols)
+      end
+    end, { nargs = '*' })
+
     -- Insert an itemize environment (for lists)
     M.insert_itemize = function()
       local itemize_snippet = {
@@ -131,33 +268,7 @@ vim.api.nvim_create_autocmd('FileType', {
     vim.keymap.set('n', '<leader>du', '<cmd>InsertSubsection<CR>', { buffer = true, desc = 'Insert LaTeX Subsection' })
     vim.keymap.set('n', '<leader>de', '<cmd>InsertEquation<CR>', { buffer = true, desc = 'Insert LaTeX Equation' })
     vim.keymap.set('n', '<leader>di', '<cmd>InsertItemize<CR>', { buffer = true, desc = 'Insert LaTeX Itemize List' })
-  end,
-})
-
-local function open_pdf_page_kitty(filepath, page, width)
-  page = page or 1
-  width = width or 800
-
-  -- build the pipeline string
-  local pipeline = string.format('pdftoppm -png -f %d -l %d -scale-to-x %d %q - | kitty +kitten icat --transfer-mode=stream', page, page, width, filepath)
-
-  -- open a vertical split and size it
-  vim.cmd 'vsplit'
-  vim.cmd 'wincmd l'
-  vim.cmd 'resize 30'
-
-  -- launch the shell in the terminal buffer, preserving the -c argument
-  vim.fn.termopen { 'sh', '-c', pipeline }
-  vim.cmd 'startinsert'
-end
-
--- Define :PdfKitty
-vim.api.nvim_create_user_command('PdfKitty', function(opts)
-  local args = vim.split(opts.args, '%s+')
-  open_pdf_page_kitty(args[1], tonumber(args[2]), tonumber(args[3]))
-end, {
-  nargs = '+',
-  complete = function(lead)
-    return vim.fn.getcompletion(lead, 'file')
+    vim.keymap.set('n', '<leader>dC', '<cmd>TexWordCount<CR>', { buffer = true, desc = 'Insert LaTeX Itemize List' })
+    vim.keymap.set('n', '<leader>dt', '<cmd>InsertTable<CR>', { buffer = true, desc = 'Insert LaTeX Table' })
   end,
 })
