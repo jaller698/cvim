@@ -1,8 +1,12 @@
 local function count_tex_words()
   local bufnr = vim.api.nvim_get_current_buf()
-  local ok, parser = pcall(vim.treesitter.get_parser, bufnr, 'latex')
+
+  -- Ensure 'tex' filetype resolves to 'latex' treesitter parser
+  pcall(vim.treesitter.language.register, 'latex', 'tex')
+
+  local ok, parser = pcall(vim.treesitter.get_parser, bufnr)
   if not ok or not parser then
-    vim.notify('LaTeX Treesitter parser not found', vim.log.levels.ERROR)
+    vim.notify('Treesitter parser not found for filetype: ' .. vim.bo[bufnr].filetype, vim.log.levels.ERROR)
     return
   end
 
@@ -11,7 +15,7 @@ local function count_tex_words()
     return
   end
 
-  -- List of environments to ignore
+  -- List of environments to ignore completely
   local excluded_envs = {
     table = true,
     tabular = true,
@@ -27,21 +31,22 @@ local function count_tex_words()
   local function traverse(node)
     local ntype = node:type()
 
-    -- Skip LaTeX comments
-    if ntype == 'comment' then
+    if ntype:find 'comment' then
       return
     end
 
-    -- Prune table and figure environments
     if ntype == 'environment' or ntype == 'generic_environment' then
       local node_text = vim.treesitter.get_node_text(node, bufnr)
       local env_name = node_text:match '^\\begin%s*%{([^%}]+)%}'
       if env_name and excluded_envs[env_name] then
-        return -- Skip traversing this entire sub-tree
+        return
       end
     end
 
-    -- Count words inside raw text nodes
+    if ntype == 'command_name' then
+      return
+    end
+
     if ntype == 'text' then
       local text = vim.treesitter.get_node_text(node, bufnr)
       for _ in text:gmatch "[%w%-']+" do
@@ -57,7 +62,7 @@ local function count_tex_words()
   end
 
   traverse(tree:root())
-  vim.notify('Word count (excl. tables & figures): ' .. word_count, vim.log.levels.INFO)
+  vim.notify('Word count: ' .. word_count, vim.log.levels.INFO)
 end
 
 -- Create the :TexWordCount command
@@ -268,7 +273,7 @@ vim.api.nvim_create_autocmd('FileType', {
     vim.keymap.set('n', '<leader>du', '<cmd>InsertSubsection<CR>', { buffer = true, desc = 'Insert LaTeX Subsection' })
     vim.keymap.set('n', '<leader>de', '<cmd>InsertEquation<CR>', { buffer = true, desc = 'Insert LaTeX Equation' })
     vim.keymap.set('n', '<leader>di', '<cmd>InsertItemize<CR>', { buffer = true, desc = 'Insert LaTeX Itemize List' })
-    vim.keymap.set('n', '<leader>dC', '<cmd>TexWordCount<CR>', { buffer = true, desc = 'Insert LaTeX Itemize List' })
+    vim.keymap.set('n', '<leader>dC', '<cmd>TexWordCount<CR>', { buffer = true, desc = 'Count words in current Tex document (rendered)' })
     vim.keymap.set('n', '<leader>dt', '<cmd>InsertTable<CR>', { buffer = true, desc = 'Insert LaTeX Table' })
   end,
 })
