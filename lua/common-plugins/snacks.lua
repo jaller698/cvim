@@ -445,5 +445,41 @@ return {
         Snacks.toggle.dim():map '<leader>uD'
       end,
     })
+
+    -- Add some entries to the popup menu
+    vim.api.nvim_create_user_command('SnacksLspDefinition', function()
+      Snacks.picker.lsp_definitions()
+    end, {})
+
+    vim.api.nvim_create_user_command('SnacksLspReferences', function()
+      Snacks.picker.lsp_references()
+    end, {})
+
+    vim.api.nvim_create_user_command('SnacksLspImplementation', function()
+      Snacks.picker.lsp_implementations()
+    end, {})
+
+    vim.api.nvim_create_user_command('SnacksLspTypeDefinition', function()
+      Snacks.picker.lsp_type_definitions()
+    end, {})
+
+    vim.api.nvim_create_user_command('SnacksLspHover', function()
+      vim.lsp.buf.hover()
+    end, {})
+
+    vim.api.nvim_create_user_command('TinyCodeAction', function()
+      require('tiny-code-action').code_action()
+    end, {})
+
+    vim.cmd [[
+      amenu PopUp.Code\ Action            :TinyCodeAction<CR>
+      amenu PopUp.-1-                      <NOP>
+      amenu PopUp.Go\ to\ Definition      :SnacksLspDefinition<CR>
+      amenu PopUp.Go\ to\ References      :SnacksLspReferences<CR>
+      amenu PopUp.Go\ to\ Implementation  :SnacksLspImplementation<CR>
+      amenu PopUp.Go\ to\ Type\ Definition :SnacksLspTypeDefinition<CR>
+      amenu PopUp.-2-                      <NOP>
+      amenu PopUp.Hover\ Documentation     :SnacksLspHover<CR>
+    ]]
   end,
 }

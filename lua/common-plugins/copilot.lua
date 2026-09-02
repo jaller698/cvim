@@ -26,6 +26,9 @@ return {
         copilot_node_command = 'node', -- adjust if needed
         server_opts_overrides = {},
       }
+
+      -- Globally disable copilot until enabled
+      vim.cmd 'Copilot disable'
     end,
   },
   {
