@@ -28,7 +28,7 @@ return {
       }
 
       -- Globally disable copilot until enabled
-      vim.cmd 'Copilot disable'
+      vim.cmd 'silent! Copilot disable'
     end,
   },
   {
