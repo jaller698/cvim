@@ -8,11 +8,7 @@ return {
     -- NOTE: `opts = {}` is the same as calling `require('mason').setup({})`
     {
       'williamboman/mason.nvim',
-      opts = {
-        registries = {
-          'file:~/kode/yaml/mason-registry/',
-        },
-      },
+      opts = {},
       cmd = { 'Mason', 'MasonUpdate', 'MasonInstall', 'MasonUninstall' },
     },
     'williamboman/mason-lspconfig.nvim',
