@@ -103,6 +103,7 @@ local plugins = {
     end,
   },
   { 'seandewar/actually-doom.nvim', opts = {}, cond = vim.fn.has 'win32' == 0, event = 'VeryLazy' }, -- Only load on non-Windows systems
+  { 'jaller698/maxim.nvim', opts = {}, cond = os.getenv 'NVIM_PROFILE' ~= 'work' },
   {
     'MeanderingProgrammer/render-markdown.nvim',
     dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.nvim' }, -- if you use the mini.nvim suite
